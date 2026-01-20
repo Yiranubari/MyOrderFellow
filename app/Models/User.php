@@ -14,4 +14,9 @@ class User
         $db = new Database();
         $this->conn = $db->connect();
     }
+
+    public function create($data)
+    {
+        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+    }
 }
