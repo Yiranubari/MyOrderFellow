@@ -14,6 +14,8 @@ class Database
     private $username;
     private $password;
 
+    protected $pdo;
+
     public function __construct()
     {
         $this->host = $_ENV['DB_HOST'];
@@ -23,5 +25,16 @@ class Database
         $this->password = $_ENV['DB_PASSWORD'];
 
         $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->database};";
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ];
+
+        try {
+
+            $this->pdo = new PDO($dsn, $this->username, $this->password, $options);
+        } catch (PDOException $e) {
+            die("Database Connection Failed: " . $e->getMessage());
+        }
     }
 }
