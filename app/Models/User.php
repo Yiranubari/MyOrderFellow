@@ -27,4 +27,6 @@ class User
         ]);
         return $this->conn->lastInsertId();
     }
+
+    public function findByEmail($email) {}
 }
