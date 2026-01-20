@@ -37,4 +37,8 @@ class Database
             die("Database Connection Failed: " . $e->getMessage());
         }
     }
+    public function connect()
+    {
+        return $this->pdo;
+    }
 }
