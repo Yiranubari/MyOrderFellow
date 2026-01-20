@@ -28,5 +28,8 @@ class User
         return $this->conn->lastInsertId();
     }
 
-    public function findByEmail($email) {}
+    public function findByEmail($email)
+    {
+        $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
+    }
 }
