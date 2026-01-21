@@ -14,6 +14,17 @@ class AuthController
             $name = trim($_POST['name']);
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
+
+            $userModel = new User();
+
+            $userModel->create([
+                'name' => $name,
+                'email' => $email,
+                'password' => $password,
+            ]);
+
+            header('Location: /login');
+            exit();
         }
     }
 }
