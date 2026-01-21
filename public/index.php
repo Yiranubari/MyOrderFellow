@@ -27,6 +27,11 @@ switch ($_SERVER['REQUEST_URI']) {
         $dashboardController->index();
         break;
 
+    case '/logout':
+        $authController = new AuthController();
+        $authController->logout();
+        break;
+
     default:
         http_response_code(404);
         echo "404 Not Found";
