@@ -6,7 +6,7 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Core\Controller;
-use App\Services\MailService;
+
 
 class AuthController
 {
@@ -17,42 +17,19 @@ class AuthController
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
-            $otp = rand(100000, 999999);
-
             $userModel = new User();
 
-            // $userModel->create([
-            //     'name' => $name,
-            //     'email' => $email,
-            //     'password' => $password,
-            // ]);
+            $userModel->create([
+                'name' => $name,
+                'email' => $email,
+                'password' => $password,
+            ]);
 
-            // header('Location: /login');
-            // exit();
-            try {
-                // Attempt to create the user
-                $userModel->create([
-                    'name' => $name,
-                    'email' => $email,
-                    'password' => $password,
-                    'otp_code' => $otp,
-                ]);
-            } catch (\PDOException $e) {
-                // If it fails (likely duplicate email), show an error and stop
-                if (strpos($e->getMessage(), 'Unique violation') !== false || $e->getCode() == 23505) {
-                    $error = "That email is already registered.";
-                    require_once __DIR__ . '/../../views/auth/register.php';
-                    return;
-                }
-                throw $e; // Throw other errors normally
-            }
+            header('Location: /login');
+            exit();
         }
-
-        // Send OTP Email
-        $mailer = new MailService();
-        $mailer->sendOTP($email, $otp);
+        require_once __DIR__ . '/../../views/auth/register.php';
     }
-
 
     public function login()
     {
