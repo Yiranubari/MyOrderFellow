@@ -47,7 +47,6 @@ class AuthController
                 throw $e; // Throw other errors normally
             }
         }
-        require_once __DIR__ . '/../../views/auth/register.php';
 
         // Send OTP Email
         $mailer = new MailService();
