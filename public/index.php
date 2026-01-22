@@ -33,7 +33,7 @@ switch ($_SERVER['REQUEST_URI']) {
         break;
 
     case '/verify';
-        $authController = new AuthController();
+        $authController = new App\Controllers\AuthController();
         $authController->verifyOTP();
         break;
 
