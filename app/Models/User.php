@@ -18,7 +18,7 @@ class User
     public function create($data)
     {
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-        $sql = "INSERT INTO companies (name, email, password) VALUES (:name, :email, :password)";
+        $sql = "INSERT INTO companies (name, email, password, otp_code) VALUES (:name, :email, :password, :otp_code)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             ':name' => $data['name'],
