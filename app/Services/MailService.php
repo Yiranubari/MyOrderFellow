@@ -23,7 +23,7 @@ class MailService
 
     public function sendOTP($recipientEmail, $otp)
     {
-        $this->mail->setFrom($_ENV['SMTP_USERNAME'], 'My Order Fellow');
+        $this->mail->setFrom('yiranubari4@gmail.com', 'My Order Fellow');
         $this->mail->addAddress($recipientEmail);
         $this->mail->isHTML(true);
         $this->mail->Subject = 'Your OTP Code';
