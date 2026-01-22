@@ -60,4 +60,35 @@ class AuthController
         header('Location: /login');
         exit();
     }
+
+    public function verifyOTP()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = trim($_POST['email']);
+            $otp_code = trim($_POST['otp_code']);
+
+            $userModel = new User();
+            $user = $userModel->findByEmail($email);
+
+            // Check if user exists AND if the OTP matches the database
+            if ($user && $user['otp_code'] === $otp_code) {
+
+                // 1. Mark the user as verified in the database
+                $userModel->verifyUser($email);
+
+                // 2. Log them in (Start Session)
+                session_start();
+                $_SESSION['company_id'] = $user['id'];
+                $_SESSION['company_name'] = $user['name'];
+
+                // 3. Redirect to Dashboard
+                header('Location: /dashboard');
+                exit();
+            } else {
+                $error = "Invalid OTP code.";
+            }
+        }
+
+        require_once __DIR__ . '/../../views/auth/verify_otp.php';
+    }
 }
