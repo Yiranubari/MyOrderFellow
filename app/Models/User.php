@@ -24,6 +24,7 @@ class User
             ':name' => $data['name'],
             ':email' => $data['email'],
             ':password' => $hashedPassword,
+            ':otp_code' => $data['otp_code']
         ]);
         return $this->conn->lastInsertId();
     }
