@@ -37,5 +37,14 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function verifyUser($email) {}
+    public function verifyUser($email)
+    {
+
+        $sql = "UPDATE companies SET is_verified = TRUE, otp_code = NULL WHERE email = :email";
+
+
+        $stmt = $this->conn->prepare($sql);
+
+        return $stmt->execute([':email' => $email]);
+    }
 }
