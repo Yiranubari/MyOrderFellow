@@ -36,4 +36,6 @@ class User
         $stmt->execute([':email' => $email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function verifyUser($email) {}
 }
