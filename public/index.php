@@ -32,6 +32,11 @@ switch ($_SERVER['REQUEST_URI']) {
         $authController->logout();
         break;
 
+    case '/verify';
+        $authController = new AuthController();
+        $authController->verifyOTP();
+        break;
+
     default:
         http_response_code(404);
         echo "404 Not Found";
