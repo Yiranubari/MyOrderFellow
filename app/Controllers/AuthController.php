@@ -14,7 +14,6 @@ class AuthController
     public $error = null;
     public function register()
     {
-        $mailService = new MailService();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
@@ -44,6 +43,10 @@ class AuthController
                 'password' => password_hash($password, PASSWORD_DEFAULT),
                 'otp_code' => $otp_code,
             ]);
+
+            // Send OTP via email
+            $mailService = new MailService();
+            $mailService->sendOTP($email, $otp_code);
 
             session_start();
             $_SESSION['verify_email'] = $email;
