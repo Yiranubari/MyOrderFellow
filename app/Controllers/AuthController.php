@@ -52,6 +52,7 @@ class AuthController
 
             session_start();
             $_SESSION['verify_email'] = $email;
+            $_SESSION['success'] = "Registered successfully! Please verify your email.";
 
             header('Location: /verify');
             exit();
