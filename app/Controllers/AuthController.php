@@ -26,9 +26,11 @@ class AuthController
             ]);
 
             header('Location: /login');
+            exit();
         }
         require_once __DIR__ . '/../../views/auth/register.php';
     }
+
 
 
     public function login()
