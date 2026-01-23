@@ -40,10 +40,10 @@ class AuthController
                 'password' => password_hash($password, PASSWORD_DEFAULT),
             ]);
 
-            header('Location: /login');
+            header('Location: /verify-otp');
             exit();
         }
-        require_once __DIR__ . '/../../views/auth/register.php';
+        require_once __DIR__ . '/../../views/auth/verify_otp.php';
     }
 
 
