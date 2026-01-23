@@ -3,6 +3,12 @@
 <div class="auth-box">
     <h2 style="text-align: center; margin-bottom: 1.5rem;">Create Account</h2>
 
+    <?php if (isset($error) && !empty($error)): ?>
+        <div class="alert alert-error">
+            <?= htmlspecialchars($error) ?>
+        </div>
+    <?php endif; ?>
+
     <form action="/register" method="POST">
         <div class="form-group">
             <label for="name">Company Name</label>
