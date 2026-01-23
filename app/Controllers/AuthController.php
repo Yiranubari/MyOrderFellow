@@ -66,6 +66,8 @@ class AuthController
                 exit();
             } else {
                 $this->error = "Invalid email or password.";
+                require_once __DIR__ . '/../../views/auth/login.php';
+                return;
             }
         }
         require_once __DIR__ . '/../../views/auth/login.php';
@@ -102,7 +104,9 @@ class AuthController
                 header('Location: /dashboard');
                 exit();
             } else {
-                $error = "Invalid OTP code.";
+                $this->error = "Invalid OTP code.";
+                require_once __DIR__ . '/../../views/auth/verify_otp.php';
+                return;
             }
         }
 
