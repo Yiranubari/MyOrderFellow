@@ -14,7 +14,7 @@ class AuthController
     public $error = null;
     public function register()
     {
-
+        $mailService = new MailService();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
