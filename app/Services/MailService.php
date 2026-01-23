@@ -19,11 +19,13 @@ class MailService
         $this->mail->Username = $_ENV['SMTP_USERNAME'];
         $this->mail->Password = $_ENV['SMTP_PASSWORD'];
         $this->mail->Port = $_ENV['SMTP_PORT'];
+        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $this->mail->CharSet = 'UTF-8';
     }
 
     public function sendOTP($recipientEmail, $otp)
     {
-        $this->mail->setFrom('yiranubari4@gmail.com', 'My Order Fellow');
+        $this->mail->setFrom($_ENV['SMTP_FROM_EMAIL'], 'My Order Fellow');
         $this->mail->addAddress($recipientEmail);
         $this->mail->isHTML(true);
         $this->mail->Subject = 'Your OTP Code';
