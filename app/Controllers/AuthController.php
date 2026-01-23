@@ -10,7 +10,7 @@ use App\Core\Controller;
 
 class AuthController
 {
-    private $error = null;
+    public $error = null;
     public function register()
     {
 
@@ -40,10 +40,13 @@ class AuthController
                 'password' => password_hash($password, PASSWORD_DEFAULT),
             ]);
 
-            header('Location: /verify-otp');
-            exit();
+            session_start();
+            $_SESSION['verify_email'] = $email;
+
+            header('Location: /verify');
         }
-        require_once __DIR__ . '/../../views/auth/verify_otp.php';
+        $error = $this->error;
+        require_once __DIR__ . '/../../views/auth/register.php';
     }
 
 
@@ -82,6 +85,7 @@ class AuthController
 
     public function verifyOTP()
     {
+        session_start();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim($_POST['email']);
             $otp_code = trim($_POST['otp_code']);
@@ -105,11 +109,10 @@ class AuthController
                 exit();
             } else {
                 $this->error = "Invalid OTP code.";
-                require_once __DIR__ . '/../../views/auth/verify_otp.php';
-                return;
             }
         }
-
+        $email = $_SESSION['verify_email'] ?? ($_GET['email'] ?? '');
+        $error = $this->error;
         require_once __DIR__ . '/../../views/auth/verify_otp.php';
     }
 }

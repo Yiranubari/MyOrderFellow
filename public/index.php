@@ -15,6 +15,7 @@ switch ($_SERVER['REQUEST_URI']) {
     case '/register':
         $authController = new AuthController();
         $authController->register();
+
         break;
 
     case '/login':
@@ -32,8 +33,8 @@ switch ($_SERVER['REQUEST_URI']) {
         $authController->logout();
         break;
 
-    case '/verify';
-        $authController = new App\Controllers\AuthController();
+    case '/verify':
+        $authController = new AuthController();
         $authController->verifyOTP();
         break;
 

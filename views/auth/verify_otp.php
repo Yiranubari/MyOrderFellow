@@ -24,7 +24,7 @@
         </p>
 
         <form action="/verify" method="POST">
-            <input type="hidden" name="email" value="<?= $_SESSION['verify_email'] ?? '' ?>">
+            <input type="hidden" name="email" value="<?= htmlspecialchars($_SESSION['verify_email'] ?? '') ?>">
 
             <div class="mb-6">
                 <label for="otp_code" class="block text-gray-700 text-sm font-bold mb-2">OTP Code</label>
