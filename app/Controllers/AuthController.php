@@ -22,6 +22,7 @@ class AuthController
 
             if (empty($name) || empty($email) || empty($password)) {
                 $this->error = "All fields are required.";
+                $error = $this->error;
                 require_once __DIR__ . '/../../views/auth/register.php';
                 return;
             }
@@ -30,6 +31,7 @@ class AuthController
 
             if ($userModel->findByEmail($email)) {
                 $this->error = "Email is already registered.";
+                $error = $this->error;
                 require_once __DIR__ . '/../../views/auth/register.php';
                 return;
             }
@@ -78,10 +80,12 @@ class AuthController
                 exit();
             } else {
                 $this->error = "Invalid email or password.";
+                $error = $this->error;
                 require_once __DIR__ . '/../../views/auth/login.php';
                 return;
             }
         }
+        $error = $this->error;
         require_once __DIR__ . '/../../views/auth/login.php';
     }
     public function logout()
