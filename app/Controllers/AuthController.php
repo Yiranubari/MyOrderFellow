@@ -10,12 +10,21 @@ use App\Core\Controller;
 
 class AuthController
 {
+    private $error = null;
     public function register()
     {
+
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = trim($_POST['password'] ?? '');
+
+            if (empty($name) || empty($email) || empty($password)) {
+                $this->error = "All fields are required.";
+                require_once __DIR__ . '/../../views/auth/register.php';
+                return;
+            }
 
             $userModel = new User();
 
