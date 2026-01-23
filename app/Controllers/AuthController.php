@@ -47,6 +47,9 @@ class AuthController
 
             session_start();
             $_SESSION['verify_email'] = $email;
+
+            header('Location: /verify');
+            exit();
         }
         $error = $this->error;
         require_once __DIR__ . '/../../views/auth/register.php';
