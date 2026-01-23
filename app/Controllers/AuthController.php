@@ -6,6 +6,7 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Core\Controller;
+use App\Services\MailService;
 
 
 class AuthController
@@ -34,16 +35,18 @@ class AuthController
                 return;
             }
 
+            // Generate OTP
+            $otp_code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
             $userModel->create([
                 'name' => $name,
                 'email' => $email,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
+                'otp_code' => $otp_code,
             ]);
 
             session_start();
             $_SESSION['verify_email'] = $email;
-
-            header('Location: /verify');
         }
         $error = $this->error;
         require_once __DIR__ . '/../../views/auth/register.php';
