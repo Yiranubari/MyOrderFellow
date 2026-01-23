@@ -28,6 +28,12 @@ class AuthController
 
             $userModel = new User();
 
+            if ($userModel->findByEmail($email)) {
+                $this->error = "Email is already registered.";
+                require_once __DIR__ . '/../../views/auth/register.php';
+                return;
+            }
+
             $userModel->create([
                 'name' => $name,
                 'email' => $email,
@@ -59,7 +65,7 @@ class AuthController
                 header('Location: /dashboard');
                 exit();
             } else {
-                $error = "Invalid email or password.";
+                $this->error = "Invalid email or password.";
             }
         }
         require_once __DIR__ . '/../../views/auth/login.php';
