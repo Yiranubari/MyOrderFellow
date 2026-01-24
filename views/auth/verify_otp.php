@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/../layouts/header.php'; ?>
 
-<div class="auth-box">
+<div class="auth-box auth-center">
     <h2 style="text-align: center; margin-bottom: 1.5rem;">Verify Account</h2>
 
     <?php if (isset($_SESSION['success']) && !empty($_SESSION['success'])): ?>
