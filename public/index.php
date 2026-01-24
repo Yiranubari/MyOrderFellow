@@ -38,6 +38,12 @@ switch ($_SERVER['REQUEST_URI']) {
         $authController->verifyOTP();
         break;
 
+    case '/dashboard/generate-key':
+        require '../app/Controllers/DashboardController.php';
+        $controller = new DashboardController();
+        $controller->generateKey();
+        break;
+
     default:
         http_response_code(404);
         echo "404 Not Found";
