@@ -74,6 +74,14 @@ class AuthController
 
             if ($user && password_verify($password, $user['password'])) {
                 session_start();
+
+                // Check if user is verified
+                if (empty($user['is_verified']) || !$user['is_verified']) {
+                    $_SESSION['verify_email'] = $user['email'];
+                    header('Location: /verify');
+                    exit();
+                }
+
                 $_SESSION['company_id'] = $user['id'];
                 $_SESSION['company_name'] = $user['name'];
 
