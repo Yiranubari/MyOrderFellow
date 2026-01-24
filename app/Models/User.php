@@ -67,4 +67,12 @@ class User
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['api_secret'] : null;
     }
+
+    public function findByApiKey($apiKey)
+    {
+        $sql = "SELECT * FROM companies WHERE api_secret = :api_secret LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':api_secret' => $apiKey]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
