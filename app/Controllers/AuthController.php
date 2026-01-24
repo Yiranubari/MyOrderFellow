@@ -47,7 +47,7 @@ class AuthController
             $_SESSION['pending_registration'] = [
                 'name' => $name,
                 'email' => $email,
-                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'password' => $password,
                 'otp_code' => $otp_code,
             ];
             $_SESSION['verify_email'] = $email;
@@ -142,6 +142,9 @@ class AuthController
                         'password' => $pending['password'],
                         'is_verified' => true,
                     ]);
+
+                    // Mark user as verified
+                    $userModel->verifyUser($email);
 
                     // Get the newly created user
                     $user = $userModel->findByEmail($email);
