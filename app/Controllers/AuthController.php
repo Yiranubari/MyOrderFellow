@@ -89,7 +89,7 @@ class AuthController
             $userModel = new User();
             $user = $userModel->findByEmail($email);
 
-            if ($user && $password === $user['password']) {
+            if ($user && password_verify($password, $user['password'])) {
                 // Check if user is verified
                 if (empty($user['is_verified']) || !$user['is_verified']) {
                     $_SESSION['verify_email'] = $user['email'];
