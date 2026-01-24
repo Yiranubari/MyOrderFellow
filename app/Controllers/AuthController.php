@@ -14,6 +14,9 @@ class AuthController
     public $error = null;
     public function register()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
@@ -65,16 +68,28 @@ class AuthController
 
     public function login()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
+
+            // Check if there's a pending registration for this email
+            if (isset($_SESSION['pending_registration']) && $_SESSION['pending_registration']['email'] === $email) {
+                $pending = $_SESSION['pending_registration'];
+                if (password_verify($password, $pending['password'])) {
+                    $_SESSION['verify_email'] = $email;
+                    header('Location: /verify');
+                    exit();
+                }
+            }
 
             $userModel = new User();
             $user = $userModel->findByEmail($email);
 
             if ($user && password_verify($password, $user['password'])) {
-                session_start();
-
                 // Check if user is verified
                 if (empty($user['is_verified']) || !$user['is_verified']) {
                     $_SESSION['verify_email'] = $user['email'];
