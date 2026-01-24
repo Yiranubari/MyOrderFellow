@@ -14,8 +14,7 @@
     </div>
 
 
-    <div
-        style="background: #ffffff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 2rem;">
+    <div class="auth-box" style="max-width: 100%; text-align: left; margin-top: 1.5rem;">
         <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1f2937;">API Integration</h3>
 
         <div style="margin-bottom: 1rem;">

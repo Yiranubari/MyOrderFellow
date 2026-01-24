@@ -57,7 +57,6 @@ body {
   margin: 3rem auto;
 }
 
-/* Centered auth box for login/register pages */
 .auth-center {
   position: absolute;
   top: 50%;
