@@ -79,7 +79,7 @@ class AuthController
             // Check if there's a pending registration for this email
             if (isset($_SESSION['pending_registration']) && $_SESSION['pending_registration']['email'] === $email) {
                 $pending = $_SESSION['pending_registration'];
-                if (password_verify($password, $pending['password'])) {
+                if ($password === $pending['password']) {
                     $_SESSION['verify_email'] = $email;
                     header('Location: /verify');
                     exit();
@@ -89,7 +89,7 @@ class AuthController
             $userModel = new User();
             $user = $userModel->findByEmail($email);
 
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && $password === $user['password']) {
                 // Check if user is verified
                 if (empty($user['is_verified']) || !$user['is_verified']) {
                     $_SESSION['verify_email'] = $user['email'];
