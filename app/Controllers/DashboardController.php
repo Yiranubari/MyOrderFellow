@@ -21,10 +21,19 @@ class DashboardController
 
     public function generateKey()
     {
-        $userModel = new User();
         session_start();
+
         if (!isset($_SESSION['company_id'])) {
             header('Location: /login');
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userModel = new User();
+
+            $userModel->rotateApiKey($_SESSION['company_id']);
+
+            header('Location: /dashboard');
             exit();
         }
     }
