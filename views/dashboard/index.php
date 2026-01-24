@@ -15,7 +15,7 @@
 
 
     <div class="auth-box" style="max-width: 100%; text-align: left; margin-top: 1.5rem;">
-        <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1f2937;">API Integration</h3>
+        <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1f2937;">API Key</h3>
 
         <div style="margin-bottom: 1rem;">
             <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151;">Your Secret
