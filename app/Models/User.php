@@ -53,6 +53,9 @@ class User
         $newApiKey = bin2hex(random_bytes(24));
         $sql = "UPDATE companies SET api_secret = :api_secret WHERE id = :company_id";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([':api_secret' => $newApiKey, ':company_id' => $companyId]);
+        if ($stmt->execute([':api_secret' => $newApiKey, ':company_id' => $companyId])) {
+            return $newApiKey;
+        }
+        return false;
     }
 }
