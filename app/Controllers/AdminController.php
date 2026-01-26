@@ -61,7 +61,7 @@ class AdminController
             }
         }
 
-        // We need a simple login view for admins
+
         require __DIR__ . '/../../views/admin/login.php';
     }
 
