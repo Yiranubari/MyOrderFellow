@@ -75,4 +75,23 @@ class User
         $stmt->execute([':api_secret' => $apiKey]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function submitKyc($companyId, $data)
+    {
+        $sql = "UPDATE companies 
+                SET business_reg_number = :reg_no, 
+                    business_address = :address, 
+                    contact_person = :contact, 
+                    kyc_status = 'submitted' 
+                WHERE id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+
+        return $stmt->execute([
+            ':reg_no' => $data['reg_no'],
+            ':address' => $data['address'],
+            ':contact' => $data['contact'],
+            ':id' => $companyId
+        ]);
+    }
 }
