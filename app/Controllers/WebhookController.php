@@ -12,8 +12,8 @@ class WebhookController
     {
         $apiKey = $_SERVER['HTTP_X_API_KEY'] ?? '';
         $userModel = new User();
-        $companyId = $userModel->findByApiKey($apiKey);
-        if (!$companyId) {
+        $company = $userModel->findByApiKey($apiKey);
+        if (!$company) {
             http_response_code(401);
             echo json_encode(['error' => 'Unauthorized']);
             return;
