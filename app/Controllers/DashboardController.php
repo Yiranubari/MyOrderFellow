@@ -10,15 +10,20 @@ class DashboardController
 {
     public function index()
     {
-        $userModel = new User();
-        $orderModel = new Order();
         session_start();
         if (!isset($_SESSION['company_id'])) {
             header('Location: /login');
             exit();
         }
-        $apiKey = $userModel->getApiKey($_SESSION['company_id']);
-        $orders = $orderModel->getByCompany($_SESSION['company_id']);
+        $userModel = new User();
+        $orderModel = new Order();
+        $kycStatus = $userModel->getKycStatus($_SESSION['company_id']);
+
+
+        if ($kycStatus === 'approved') {
+            $apiKey = $userModel->getApiKey($_SESSION['company_id']);
+            $orders = $orderModel->getByCompany($_SESSION['company_id']);
+        }
         require_once __DIR__ . '/../../views/dashboard/index.php';
     }
 
@@ -40,4 +45,6 @@ class DashboardController
             exit();
         }
     }
+
+    public function submitKyc() {}
 }
