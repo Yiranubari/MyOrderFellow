@@ -26,13 +26,13 @@ class WebhookController
             return;
         }
         $orderModel = new Order();
-        $orderData = [
+        $orderData = json_encode([
             'company_id' => $company['id'],
             'external_order_id' => $data['external_order_id'] ?? '',
             'customer_email' => $data['customer_email'] ?? '',
             'delivery_address' => $data['delivery_address'] ?? '',
             'items' => $data['items'] ?? [],
-        ];
+        ]);
         $orderId = $orderModel->create($orderData);
         http_response_code(201);
         echo json_encode(['message' => 'Order created', 'order_id' => $orderId]);
