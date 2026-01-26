@@ -14,7 +14,7 @@
     </div>
 
     <?php if ($kycStatus === 'approved'): ?>
-        <!-- API Key Section -->
+
         <div class="auth-box" style="max-width: 100%; text-align: left; margin-top: 1.5rem;">
             <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1f2937;">API Key</h3>
 
@@ -80,22 +80,23 @@
         </div>
 
     <?php elseif ($kycStatus === 'submitted'): ?>
-        <!-- Application Under Review -->
-        <div style="max-width: 600px; margin: 3rem auto; background: linear-gradient(135deg, #dbeafe 0%, #fef3c7 100%); padding: 2.5rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        <div
+            style="max-width: 600px; margin: 3rem auto; background-color:#ffffff; padding: 2.5rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
             <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
             <h2 style="margin: 0 0 1rem 0; color: #1e40af; font-size: 1.5rem;">Application Under Review</h2>
             <p style="color: #374151; font-size: 1rem; line-height: 1.6; margin: 0;">
                 Your documents have been received.<br>
                 An admin will review them shortly.
             </p>
-            <div style="margin-top: 1.5rem; padding: 0.75rem 1.5rem; background-color: #fef3c7; border-radius: 8px; display: inline-block;">
-                <span style="color: #92400e; font-weight: 500;">⏳ Estimated review time: 1-2 business days</span>
+            <div
+                style="margin-top: 1.5rem; padding: 0.75rem 1.5rem; background-color: #2563eb; border-radius: 8px; display: inline-block;">
+                <span style="color: #ffffff; font-weight: 500;">⏳ Estimated review time: 1-2 business days</span>
             </div>
         </div>
 
     <?php else: ?>
-        <!-- KYC Submission Form (Pending Status) -->
-        <div style="max-width: 600px; margin: 2rem auto; background: #ffffff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        <div
+            style="max-width: 600px; margin: 2rem auto; background: #ffffff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
             <h2 style="margin: 0 0 0.5rem 0; color: #1f2937; font-size: 1.5rem;">Complete Your KYC</h2>
             <p style="color: #6b7280; margin: 0 0 1.5rem 0; font-size: 0.875rem;">
                 Please provide your business details to get approved for API access.
@@ -106,8 +107,7 @@
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151;">
                         Business Registration Number
                     </label>
-                    <input type="text" name="business_reg_no" required
-                        placeholder="e.g. RC-123456"
+                    <input type="text" name="business_reg_no" required placeholder="e.g. RC-123456"
                         style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 4px; box-sizing: border-box; font-size: 1rem;">
                 </div>
 
@@ -115,8 +115,7 @@
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151;">
                         Business Address
                     </label>
-                    <textarea name="business_address" required rows="3"
-                        placeholder="Enter your full business address"
+                    <textarea name="business_address" required rows="3" placeholder="Enter your full business address"
                         style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 4px; box-sizing: border-box; font-size: 1rem; resize: vertical;"></textarea>
                 </div>
 
@@ -124,8 +123,7 @@
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151;">
                         Contact Person Name
                     </label>
-                    <input type="text" name="contact_person" required
-                        placeholder="Full name of primary contact"
+                    <input type="text" name="contact_person" required placeholder="Full name of primary contact"
                         style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 4px; box-sizing: border-box; font-size: 1rem;">
                 </div>
 
