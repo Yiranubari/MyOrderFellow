@@ -32,6 +32,50 @@
             </button>
         </form>
     </div>
+
+    <div class="auth-box" style="max-width: 100%; text-align: left; margin-top: 1.5rem;">
+        <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1f2937;">Recent Orders</h3>
+
+        <?php if (empty($orders)): ?>
+            <p style="color: #6b7280; font-style: italic;">No orders received yet.</p>
+        <?php else: ?>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                    <thead>
+                        <tr style="background-color: #f9fafb; border-bottom: 2px solid #e5e7eb;">
+                            <th style="padding: 0.75rem; text-align: left; color: #374151; font-weight: 600;">Order ID
+                                (External)</th>
+                            <th style="padding: 0.75rem; text-align: left; color: #374151; font-weight: 600;">Date</th>
+                            <th style="padding: 0.75rem; text-align: left; color: #374151; font-weight: 600;">Customer Email
+                            </th>
+                            <th style="padding: 0.75rem; text-align: left; color: #374151; font-weight: 600;">Delivery
+                                Address</th>
+                            <th style="padding: 0.75rem; text-align: left; color: #374151; font-weight: 600;">Items</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($orders as $order): ?>
+                            <?php
+                            $items = json_decode($order['items'] ?? '[]', true);
+                            $itemsList = is_array($items) ? implode(', ', $items) : '';
+                            ?>
+                            <tr style="border-bottom: 1px solid #e5e7eb;">
+                                <td style="padding: 0.75rem; color: #1f2937;">
+                                    <?= htmlspecialchars($order['external_order_id'] ?? '') ?></td>
+                                <td style="padding: 0.75rem; color: #6b7280;">
+                                    <?= htmlspecialchars($order['created_at'] ?? '') ?></td>
+                                <td style="padding: 0.75rem; color: #1f2937;">
+                                    <?= htmlspecialchars($order['customer_email'] ?? '') ?></td>
+                                <td style="padding: 0.75rem; color: #1f2937;">
+                                    <?= htmlspecialchars($order['delivery_address'] ?? '') ?></td>
+                                <td style="padding: 0.75rem; color: #6b7280;"><?= htmlspecialchars($itemsList) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
 
 <?php require __DIR__ . '/../layouts/footer.php'; ?>
