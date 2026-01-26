@@ -61,6 +61,30 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller->submitKyc();
         break;
 
+    case '/admin/login':
+        require '../app/Controllers/AdminController.php';
+        $controller = new \App\Controllers\AdminController();
+        $controller->login();
+        break;
+
+    case '/admin/dashboard':
+        require '../app/Controllers/AdminController.php';
+        $controller = new \App\Controllers\AdminController();
+        $controller->dashboard();
+        break;
+
+    case '/admin/approve':
+        require '../app/Controllers/AdminController.php';
+        $controller = new \App\Controllers\AdminController();
+        $controller->approve();
+        break;
+
+    case '/admin/reject':
+        require '../app/Controllers/AdminController.php';
+        $controller = new \App\Controllers\AdminController();
+        $controller->reject();
+        break;
+
     default:
         http_response_code(404);
         echo "404 Not Found";
