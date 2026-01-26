@@ -61,6 +61,12 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller->submitKyc();
         break;
 
+    case '/admin/register':
+        require '../app/Controllers/AdminController.php';
+        $controller = new \App\Controllers\AdminController();
+        $controller->register();
+        break;
+
     case '/admin/login':
         require '../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
