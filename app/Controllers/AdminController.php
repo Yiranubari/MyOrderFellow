@@ -28,7 +28,7 @@ class AdminController
                 header('Location: /admin/login');
                 exit();
             } else {
-                $error = "Error: Email already exists or database failed.";
+                $error = "Error: Email already exists or registration failed.";
             }
         }
 
@@ -38,7 +38,7 @@ class AdminController
     {
         session_start();
 
-        // If already logged in, go to dashboard
+
         if (isset($_SESSION['admin_id'])) {
             header('Location: /admin/dashboard');
             exit();
