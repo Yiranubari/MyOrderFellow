@@ -56,9 +56,9 @@ class DashboardController
         }
 
         $kycData = [
-            'reg_no' => trim($_POST['reg_no'] ?? ''),
-            'contact' => trim($_POST['contact'] ?? ''),
-            'address' => trim($_POST['address'] ?? ''),
+            'reg_no' => trim($_POST['business_reg_no'] ?? ''),
+            'contact' => trim($_POST['contact_person'] ?? ''),
+            'address' => trim($_POST['business_address'] ?? ''),
         ];
         $userModel = new User();
         $userModel->submitKyc($_SESSION['company_id'], $kycData);
