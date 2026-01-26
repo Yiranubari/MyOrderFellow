@@ -46,5 +46,24 @@ class DashboardController
         }
     }
 
-    public function submitKyc() {}
+    public function submitKyc()
+    {
+        session_start();
+
+        if (!isset($_SESSION['company_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        $kycData = [
+            'reg_no' => trim($_POST['reg_no'] ?? ''),
+            'contact' => trim($_POST['contact'] ?? ''),
+            'address' => trim($_POST['address'] ?? ''),
+        ];
+        $userModel = new User();
+        $userModel->submitKyc($_SESSION['company_id'], $kycData);
+
+        header('Location: /dashboard');
+        exit();
+    }
 }
