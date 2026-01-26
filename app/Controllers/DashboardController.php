@@ -18,6 +18,7 @@ class DashboardController
             exit();
         }
         $apiKey = $userModel->getApiKey($_SESSION['company_id']);
+        $orders = $orderModel->getByCompany($_SESSION['company_id']);
         require_once __DIR__ . '/../../views/dashboard/index.php';
     }
 
