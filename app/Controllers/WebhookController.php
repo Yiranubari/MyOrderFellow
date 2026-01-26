@@ -18,5 +18,12 @@ class WebhookController
             echo json_encode(['error' => 'Unauthorized']);
             return;
         }
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+        if (!$data) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid JSON payload']);
+            return;
+        }
     }
 }
