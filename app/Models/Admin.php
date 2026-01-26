@@ -26,6 +26,28 @@ class Admin
         return false;
     }
 
+    public function create($name, $email, $password)
+    {
+        // Check if email already exists
+        $checkSql = "SELECT id FROM admins WHERE email = :email LIMIT 1";
+        $checkStmt = $this->conn->prepare($checkSql);
+        $checkStmt->bindParam(':email', $email);
+        $checkStmt->execute();
+
+        if ($checkStmt->fetch()) {
+            return false; // Email already exists
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO admins (name, email, password) VALUES (:name, :email, :password)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            ':name' => $name,
+            ':email' => $email,
+            ':password' => $hashedPassword
+        ]);
+    }
+
     public function getPendingApplications()
     {
         $sql = "SELECT * FROM companies WHERE kyc_status = 'submitted' ORDER BY created_at ASC";

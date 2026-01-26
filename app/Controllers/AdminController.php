@@ -6,6 +6,34 @@ use App\Models\Admin;
 
 class AdminController
 {
+
+    public function register()
+    {
+        session_start();
+        $systemSecret = "MOF-MASTER-KEY";
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = trim($_POST['name'] ?? '');
+            $email = trim($_POST['email'] ?? '');
+            $password = $_POST['password'] ?? '';
+            $secret = $_POST['admin_secret'] ?? '';
+
+            if ($secret !== $systemSecret) {
+                $error = "⛔ Access Denied: Incorrect System Secret.";
+                require __DIR__ . '/../../views/admin/register.php';
+                return;
+            }
+            $adminModel = new Admin();
+            if ($adminModel->create($name, $email, $password)) {
+                header('Location: /admin/login');
+                exit();
+            } else {
+                $error = "Error: Email already exists or database failed.";
+            }
+        }
+
+        require __DIR__ . '/../../views/admin/register.php';
+    }
     public function login()
     {
         session_start();
