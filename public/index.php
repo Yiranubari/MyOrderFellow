@@ -55,6 +55,12 @@ switch ($_SERVER['REQUEST_URI']) {
         }
         break;
 
+    case '/dashboard/submit-kyc';
+        require '../app/Controllers/DashboardController.php';
+        $controller = new DashboardController();
+        $controller->submitKyc();
+        break;
+
     default:
         http_response_code(404);
         echo "404 Not Found";
