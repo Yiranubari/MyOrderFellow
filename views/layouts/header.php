@@ -12,8 +12,12 @@
     <nav class="navbar">
         <a href="/" class="brand">My Order Fellow</a>
         <div class="nav-links">
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
+            <?php if (isset($_SESSION['company_id'])): ?>
+                <a href="/logout">Logout</a>
+            <?php else: ?>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            <?php endif; ?>
         </div>
     </nav>
     <main class="container"></main>
