@@ -29,4 +29,12 @@ class Order
         ]);
         return $this->conn->lastInsertId();
     }
+
+    public function getByCompany($companyId)
+    {
+        $sql = "SELECT * FROM orders WHERE company_id = :company_id ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':company_id' => $companyId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
