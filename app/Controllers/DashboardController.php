@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\Order;
 
 
 class DashboardController
@@ -10,6 +11,7 @@ class DashboardController
     public function index()
     {
         $userModel = new User();
+        $orderModel = new Order();
         session_start();
         if (!isset($_SESSION['company_id'])) {
             header('Location: /login');
