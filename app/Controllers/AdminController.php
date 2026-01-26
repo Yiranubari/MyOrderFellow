@@ -36,4 +36,22 @@ class AdminController
         header('Location: /admin/dashboard');
         exit();
     }
+
+    public function reject()
+    {
+        session_start();
+        if (!isset($_SESSION['admin_id'])) {
+            header('Location: /admin/login');
+            exit();
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $companyId = $_POST['company_id'] ?? null;
+            if ($companyId) {
+                $adminModel = new Admin();
+                $adminModel->updateKycStatus($companyId, 'rejected');
+            }
+        }
+        header('Location: /admin/dashboard');
+        exit();
+    }
 }
