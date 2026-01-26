@@ -94,4 +94,13 @@ class User
             ':id' => $companyId
         ]);
     }
+
+    public function getKycStatus($companyId)
+    {
+        $sql = "SELECT kyc_status FROM companies WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $companyId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['kyc_status'] : 'pending';
+    }
 }
