@@ -6,6 +6,37 @@ use App\Models\Admin;
 
 class AdminController
 {
+    public function login()
+    {
+        session_start();
+
+        // If already logged in, go to dashboard
+        if (isset($_SESSION['admin_id'])) {
+            header('Location: /admin/dashboard');
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            $adminModel = new Admin();
+            $admin = $adminModel->login($email, $password);
+
+            if ($admin) {
+                $_SESSION['admin_id'] = $admin['id'];
+                $_SESSION['admin_name'] = $admin['name'];
+                header('Location: /admin/dashboard');
+                exit();
+            } else {
+                $error = "Invalid admin credentials";
+            }
+        }
+
+        // We need a simple login view for admins
+        require __DIR__ . '/../../views/admin/login.php';
+    }
+
     public function dashboard()
     {
         session_start();
@@ -15,7 +46,7 @@ class AdminController
         }
         $adminModel = new Admin();
         $pendingCompanies = $adminModel->getPendingApplications();
-        require '../views/admin/dashboard.php';
+        require __DIR__ . '/../../views/admin/dashboard.php';
     }
 
     public function approve()
