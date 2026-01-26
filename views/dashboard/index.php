@@ -34,7 +34,6 @@
             </form>
         </div>
 
-        <!-- Recent Orders Section -->
         <div class="auth-box" style="max-width: 100%; text-align: left; margin-top: 1.5rem;">
             <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1f2937;">Recent Orders</h3>
 
@@ -80,8 +79,7 @@
         </div>
 
     <?php elseif ($kycStatus === 'submitted'): ?>
-        <div
-            style="max-width: 600px; margin: 3rem auto; background-color:#ffffff; padding: 2.5rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        <div class="auth-box" style="text-align: center; margin-top: 1.5rem;">
             <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
             <h2 style="margin: 0 0 1rem 0; color: #1e40af; font-size: 1.5rem;">Application Under Review</h2>
             <p style="color: #374151; font-size: 1rem; line-height: 1.6; margin: 0;">
@@ -96,7 +94,7 @@
 
     <?php else: ?>
         <div
-            style="max-width: 600px; margin: 2rem auto; background: #ffffff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            style="max-width: 100%; margin: 2rem auto; background: #ffffff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
             <h2 style="margin: 0 0 0.5rem 0; color: #1f2937; font-size: 1.5rem;">Complete Your KYC</h2>
             <p style="color: #6b7280; margin: 0 0 1.5rem 0; font-size: 0.875rem;">
                 Please provide your business details to get approved for API access.
