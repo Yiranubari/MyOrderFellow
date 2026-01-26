@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App\Core\Database;
-use PDO;
+use App\Models\Admin;
 
 class AdminController
 {
