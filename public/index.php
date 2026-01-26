@@ -44,6 +44,17 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller->generateKey();
         break;
 
+    case '/webhook':
+        require '../app/Controllers/WebhookController.php';
+        $webhookController = new App\Controllers\WebhookController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $webhookController->handleOrder();
+        } else {
+            http_response_code(405);
+            echo "Method Not Allowed";
+        }
+        break;
+
     default:
         http_response_code(404);
         echo "404 Not Found";
