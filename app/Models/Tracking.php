@@ -14,13 +14,13 @@ class Tracking
         $db = new Database();
         $this->conn = $db->connect();
     }
-    public function addHistory($orderId, $status, $notes)
+    public function addHistory($orderId, $status, $description)
     {
         $sql = "INSERT INTO tracking_history (order_id, status, notes, created_at) VALUES (:order_id, :status, :notes, NOW())";
         $this->conn->prepare($sql)->execute([
             ':order_id' => $orderId,
             ':status' => $status,
-            ':notes' => $notes,
+            ':desc' => $description,
         ]);
         return $this->conn->lastInsertId();
     }
