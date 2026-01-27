@@ -41,8 +41,6 @@ class WebhookController
         $addHistory = new Tracking();
         $addHistory->addHistory($orderId, 'Order Created', 'Order has been created');
         $mailService = new MailService();
-        if (!empty($orderData['customer_email'])) {
-            $mailService->sendOrderConfirmation($orderData['customer_email'], $orderId);
-        }
+        $mailService->sendOrderConfirmation($orderData['customer_email'], $orderData['external_order_id']);
     }
 }
