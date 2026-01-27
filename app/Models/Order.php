@@ -37,4 +37,14 @@ class Order
         $stmt->execute([':company_id' => $companyId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function updateStatus($orderId, $newStatus)
+    {
+        $sql = "UPDATE orders SET status = :status, updated_at = NOW() WHERE id = :order_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':status' => $newStatus,
+            ':order_id' => $orderId,
+        ]);
+    }
 }
