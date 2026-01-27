@@ -43,8 +43,8 @@ class Order
         $sql = "UPDATE orders SET status = :status, updated_at = NOW() WHERE id = :order_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
-            ':status' => $newStatus,
-            ':order_id' => $orderId,
+            'status' => $newStatus,
+            'order_id' => $orderId,
         ]);
     }
 }
