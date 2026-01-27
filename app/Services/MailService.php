@@ -34,4 +34,17 @@ class MailService
         $this->mail->send();
         return true;
     }
+
+    public function sendOrderConfirmation($recipientEmail, $orderId)
+    {
+        $this->mail->clearAddresses();
+        $fromEmail = getenv('SMTP_FROM_EMAIL') ?: $_ENV['SMTP_FROM_EMAIL'] ?? 'noreply@orderfellow.com';
+        $this->mail->setFrom($fromEmail, 'My Order Fellow');
+        $this->mail->addAddress($recipientEmail);
+        $this->mail->isHTML(true);
+        $this->mail->Subject = 'Order Confirmation';
+        $this->mail->Body = "<h1>Order Confirmation</h1><p>Your order with ID <strong>$orderId</strong> has been confirmed.</p>";
+        $this->mail->send();
+        return true;
+    }
 }
