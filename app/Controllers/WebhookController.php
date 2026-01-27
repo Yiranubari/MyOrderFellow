@@ -37,5 +37,7 @@ class WebhookController
         $orderId = $orderModel->create($orderData);
         http_response_code(201);
         echo json_encode(['message' => 'Order created', 'order_id' => $orderId]);
+        $addHistory = new Tracking();
+        $addHistory->addHistory($orderId, 'Order Created', 'Order has been created');
     }
 }
