@@ -47,4 +47,17 @@ class MailService
         $this->mail->send();
         return true;
     }
+
+    public function sendStatusUpdate($recipientEmail, $orderId, $newStatus)
+    {
+        $this->mail->clearAddresses();
+        $fromEmail = getenv('SMTP_FROM_EMAIL') ?: $_ENV['SMTP_FROM_EMAIL'] ?? 'noreply@orderfellow.com';
+        $this->mail->setFrom($fromEmail, 'My Order Fellow');
+        $this->mail->addAddress($recipientEmail);
+        $this->mail->isHTML(true);
+        $this->mail->Subject = 'Order Status Update';
+        $this->mail->Body = "<h1>Order Status Update</h1><p>Your order with ID <strong>$orderId</strong> status has been updated to: <strong>$newStatus</strong>.</p>";
+        $this->mail->send();
+        return true;
+    }
 }
