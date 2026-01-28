@@ -27,8 +27,6 @@ class TrackingController
                 return;
             }
 
-
-
             $trackingId = trim($_POST['tracking_id'] ?? '');
 
             if (empty($trackingId)) {
