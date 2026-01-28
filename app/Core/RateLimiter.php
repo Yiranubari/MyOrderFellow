@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Core;
 
 use App\Models\Admin;
 use App\Models\Order;
