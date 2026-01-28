@@ -70,6 +70,16 @@ class AdminController
         require __DIR__ . '/../../views/admin/login.php';
     }
 
+    public function logout()
+    {
+        session_start();
+        unset($_SESSION['admin_id']);
+        unset($_SESSION['admin_name']);
+        session_destroy();
+        header('Location: /admin/login');
+        exit();
+    }
+
     public function dashboard()
     {
         session_start();

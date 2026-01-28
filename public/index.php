@@ -73,6 +73,12 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller->login();
         break;
 
+    case '/admin/logout':
+        require '../app/Controllers/AdminController.php';
+        $controller = new \App\Controllers\AdminController();
+        $controller->logout();
+        break;
+
     case '/admin/dashboard':
         require '../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
