@@ -12,6 +12,15 @@ class WebhookController
 {
     public function handleOrder()
     {
+        $userIP = $_SERVER['REMOTE_ADDR'];
+        $limiter = new \App\Core\RateLimiter();
+
+        if (!$limiter->check($userIP, 20, 60)) {
+            http_response_code(429); // 429 = "Too Many Requests"
+            echo json_encode(['status' => 'error', 'message' => 'Rate limit exceeded']);
+            exit();
+        }
+
         $apiKey = $_SERVER['HTTP_X_API_KEY'] ?? '';
         $userModel = new User();
         $company = $userModel->findByApiKey($apiKey);
