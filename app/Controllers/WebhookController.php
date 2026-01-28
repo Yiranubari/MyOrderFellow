@@ -17,7 +17,7 @@ class WebhookController
         $limiter = new RateLimiter();
 
         if (!$limiter->check($userIP, 20, 60)) {
-            http_response_code(429); // 429 = "Too Many Requests"
+            http_response_code(429);
             echo json_encode(['status' => 'error', 'message' => 'Rate limit exceeded']);
             exit();
         }
