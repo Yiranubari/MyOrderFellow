@@ -20,7 +20,7 @@
         }
 
         .header {
-            background-color: #1e3a5f;
+            background-color: #2563eb;
             color: #ffffff;
             padding: 1rem 2rem;
             display: flex;
@@ -79,8 +79,8 @@
         .sidebar-nav a:hover,
         .sidebar-nav a.active {
             background-color: #f3f4f6;
-            color: #1e3a5f;
-            border-left: 3px solid #1e3a5f;
+            color: #2563eb;
+            border-left: 3px solid #2563eb;
         }
 
         .main-content {
@@ -181,7 +181,7 @@
         }
 
         .btn-manage {
-            background-color: #1e3a5f;
+            background-color: #2563eb;
             color: #ffffff;
         }
 

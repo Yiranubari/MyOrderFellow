@@ -20,7 +20,7 @@
         }
 
         .header {
-            background-color: #1e3a5f;
+            background-color: #2563eb;
             color: #ffffff;
             padding: 1rem 2rem;
             display: flex;
@@ -172,14 +172,14 @@
         .form-group select:focus,
         .form-group input[type="text"]:focus {
             outline: none;
-            border-color: #1e3a5f;
-            box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.1);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
         }
 
         .btn-submit {
             width: 100%;
             padding: 0.75rem 1rem;
-            background-color: #1e3a5f;
+            background-color: #2563eb;
             color: #ffffff;
             border: none;
             border-radius: 4px;
@@ -190,7 +190,7 @@
         }
 
         .btn-submit:hover {
-            background-color: #163352;
+            background-color: #1d4ed8;
         }
 
         .timeline {

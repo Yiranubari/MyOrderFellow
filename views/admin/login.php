@@ -14,7 +14,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #1a1a1a;
+            background-color: #ffffff;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,17 +22,17 @@
         }
 
         .login-container {
-            background-color: #2d2d2d;
+            background-color: #f9fafb;
             padding: 2.5rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
             margin: 1rem;
         }
 
         .login-container h1 {
-            color: #ffffff;
+            color: #1f2937;
             font-size: 1.5rem;
             text-align: center;
             margin-bottom: 2rem;
@@ -40,9 +40,9 @@
         }
 
         .error-box {
-            background-color: #7f1d1d;
-            border: 1px solid #dc2626;
-            color: #fecaca;
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
             padding: 0.75rem 1rem;
             border-radius: 4px;
             margin-bottom: 1.5rem;
@@ -55,7 +55,7 @@
 
         .form-group label {
             display: block;
-            color: #d1d5db;
+            color: #374151;
             margin-bottom: 0.5rem;
             font-size: 0.875rem;
             font-weight: 500;
@@ -64,17 +64,17 @@
         .form-group input {
             width: 100%;
             padding: 0.75rem;
-            background-color: #3d3d3d;
-            border: 1px solid #4b5563;
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
             border-radius: 4px;
-            color: #ffffff;
+            color: #1f2937;
             font-size: 1rem;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
         }
 
         .form-group input::placeholder {
@@ -84,7 +84,7 @@
         .btn-submit {
             width: 100%;
             padding: 0.875rem;
-            background-color: #3b82f6;
+            background-color: #2563eb;
             color: #ffffff;
             border: none;
             border-radius: 4px;
@@ -95,7 +95,7 @@
         }
 
         .btn-submit:hover {
-            background-color: #2563eb;
+            background-color: #1d4ed8;
         }
 
         .admin-badge {
@@ -105,8 +105,8 @@
 
         .admin-badge span {
             display: inline-block;
-            background-color: #4b5563;
-            color: #9ca3af;
+            background-color: #2563eb;
+            color: #ffffff;
             padding: 0.25rem 0.75rem;
             border-radius: 4px;
             font-size: 0.75rem;
