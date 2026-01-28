@@ -24,4 +24,11 @@ class Tracking
         ]);
         return $this->conn->lastInsertId();
     }
+    public function getHistoryByOrderId($orderId)
+    {
+        $sql = "SELECT * FROM tracking_history WHERE order_id = :order_id ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':order_id' => $orderId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
