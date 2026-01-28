@@ -31,4 +31,12 @@ class Tracking
         $stmt->execute([':order_id' => $orderId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getOrderByTrackingId($trackingId)
+    {
+        $sql = "SELECT * FROM orders WHERE id = :tracking_id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':tracking_id' => $trackingId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
