@@ -9,5 +9,34 @@ use App\Services\OrderService;
 
 class RateLimiter
 {
-    public function check($key, $limit, $windowSeconds) {}
+    public function __construct()
+    {
+        $this->cacheDir = __DIR__ . '/../../cache/';
+    }
+
+    public function check($key, $limit, $windowSeconds)
+    {
+        $file = $this->cacheDir . 'rate_limit_' . md5($key) . '.json';
+        $current_time = time();
+
+        $data = [
+            'start_time' => $current_time,
+            'count' => 0
+        ];
+
+        if (file_exists($file)) {
+            file_get_contents($file);
+            $data = json_decode(file_get_contents($file), true);
+            if ($current_time - $data['start_time'] < $windowSeconds) {
+                if ($data['count'] >= $limit) {
+                    return false;
+                }
+            } else {
+                $data = [
+                    'start_time' => $current_time,
+                    'count' => 0
+                ];
+            }
+        }
+    }
 }
