@@ -39,9 +39,9 @@ class RateLimiter
                     'count' => 0
                 ];
             }
-            $data['count']++;
-            file_put_contents($file, json_encode($data));
-            return true;
         }
+        $data['count']++;
+        file_put_contents($file, json_encode($data));
+        return true;
     }
 }
