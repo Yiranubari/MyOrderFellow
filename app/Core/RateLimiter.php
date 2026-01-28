@@ -14,6 +14,10 @@ class RateLimiter
     public function __construct()
     {
         $this->cacheDir = __DIR__ . '/../../cache/';
+
+        if (!is_dir($this->cacheDir)) {
+            mkdir($this->cacheDir, 0755, true);
+        }
     }
 
     public function check($key, $limit, $windowSeconds)
