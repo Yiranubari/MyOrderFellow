@@ -39,10 +39,10 @@ class AuthController
                 return;
             }
 
-            // Generate OTP
+
             $otp_code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
-            // Store registration data in session (NOT in database yet)
+
             session_start();
             $_SESSION['pending_registration'] = [
                 'name' => $name,
@@ -53,7 +53,7 @@ class AuthController
             $_SESSION['verify_email'] = $email;
             $_SESSION['success'] = "Please verify your email to complete registration.";
 
-            // Send OTP via email
+
             $mailService = new MailService();
             $mailService->sendOTP($email, $otp_code);
 
@@ -76,7 +76,7 @@ class AuthController
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
-            // Check if there's a pending registration for this email
+
             if (isset($_SESSION['pending_registration']) && $_SESSION['pending_registration']['email'] === $email) {
                 $pending = $_SESSION['pending_registration'];
                 if ($password === $pending['password']) {
@@ -90,7 +90,7 @@ class AuthController
             $user = $userModel->findByEmail($email);
 
             if ($user && password_verify($password, $user['password'])) {
-                // Check if user is verified
+
                 if (empty($user['is_verified']) || !$user['is_verified']) {
                     $_SESSION['verify_email'] = $user['email'];
                     header('Location: /verify');
@@ -127,15 +127,15 @@ class AuthController
             $email = trim($_POST['email']);
             $otp_code = trim($_POST['otp_code']);
 
-            // Check if this is a new registration (pending in session)
+
             if (isset($_SESSION['pending_registration'])) {
                 $pending = $_SESSION['pending_registration'];
 
-                // Verify OTP matches session
+
                 if ($pending['email'] === $email && $pending['otp_code'] === $otp_code) {
                     $userModel = new User();
 
-                    // Now create the user in database
+
                     $userModel->create([
                         'name' => $pending['name'],
                         'email' => $pending['email'],
@@ -143,17 +143,17 @@ class AuthController
                         'is_verified' => true,
                     ]);
 
-                    // Mark user as verified
+
                     $userModel->verifyUser($email);
 
-                    // Get the newly created user
+
                     $user = $userModel->findByEmail($email);
 
-                    // Clear pending registration
+
                     unset($_SESSION['pending_registration']);
                     unset($_SESSION['verify_email']);
 
-                    // Log them in
+
                     $_SESSION['company_id'] = $user['id'];
                     $_SESSION['company_name'] = $user['name'];
 
@@ -163,7 +163,7 @@ class AuthController
                     $this->error = "Invalid OTP code.";
                 }
             } else {
-                // Existing user trying to verify (e.g., from login redirect)
+
                 $userModel = new User();
                 $user = $userModel->findByEmail($email);
 

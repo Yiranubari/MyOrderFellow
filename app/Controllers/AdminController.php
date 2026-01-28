@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Admin;
+use App\Models\Order;
 
 class AdminController
 {
@@ -19,7 +20,7 @@ class AdminController
             $secret = $_POST['admin_secret'] ?? '';
 
             if ($secret !== $systemSecret) {
-                $error = "⛔ Access Denied: Incorrect System Secret.";
+                $error = "Access Denied: Incorrect System Secret.";
                 require __DIR__ . '/../../views/admin/register.php';
                 return;
             }
@@ -43,6 +44,8 @@ class AdminController
             header('Location: /admin/dashboard');
             exit();
         }
+
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
