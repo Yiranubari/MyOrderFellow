@@ -28,14 +28,13 @@ class Admin
 
     public function create($name, $email, $password)
     {
-        // Check if email already exists
         $checkSql = "SELECT id FROM admins WHERE email = :email LIMIT 1";
         $checkStmt = $this->conn->prepare($checkSql);
         $checkStmt->bindParam(':email', $email);
         $checkStmt->execute();
 
         if ($checkStmt->fetch()) {
-            return false; // Email already exists
+            return false;
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
