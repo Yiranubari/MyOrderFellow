@@ -9,6 +9,8 @@ use App\Services\OrderService;
 
 class RateLimiter
 {
+
+    private $cacheDir;
     public function __construct()
     {
         $this->cacheDir = __DIR__ . '/../../cache/';
