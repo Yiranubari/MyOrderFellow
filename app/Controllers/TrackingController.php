@@ -11,14 +11,7 @@ class TrackingController
 {
     public function index()
     {
-        session_start();
-        if (!isset($_SESSION['admin_id'])) {
-            header('Location: /admin/login');
-            exit();
-        }
-
-        $trackingModel = new Tracking();
-        $allHistory = $trackingModel->getAllHistory(); // Assuming this method exists
+        $error = $_GET['error'] ?? null;
 
         require __DIR__ . '/../../views/admin/tracking_index.php';
     }
