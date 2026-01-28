@@ -13,6 +13,6 @@ class TrackingController
     {
         $error = $_GET['error'] ?? null;
 
-        require __DIR__ . '/../../views/admin/tracking_index.php';
+        require __DIR__ . '/../../views/tracking/search.php';
     }
 }
