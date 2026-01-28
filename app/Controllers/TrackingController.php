@@ -25,8 +25,9 @@ class TrackingController
                 require __DIR__ . '/../../views/tracking/search.php';
                 return;
             }
+
             $orderModel = new Order();
-            $order = $orderModel->getOrderByTrackingId($trackingId);
+            $order = $orderModel->getOrderByExternalId($trackingId);
             if (!$order) {
                 $error = "Tracking ID not found.";
                 require __DIR__ . '/../../views/tracking/search.php';
