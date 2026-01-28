@@ -115,4 +115,15 @@ class AdminController
         header('Location: /admin/dashboard');
         exit();
     }
+    public function index()
+    {
+        session_start();
+        if (!isset($_SESSION['admin_id'])) {
+            header('Location: /admin/login');
+            exit();
+        }
+        $orderModel = new Order();
+        $orders = $orderModel->getAllOrders();
+        require __DIR__ . '/../../views/admin/orders.php';
+    }
 }
