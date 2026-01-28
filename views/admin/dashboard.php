@@ -47,6 +47,27 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-orders {
+            background-color: #ffffff;
+            color: #1e3a5f;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn-orders:hover {
+            background-color: #f3f4f6;
+        }
+
         .container {
             max-width: 1200px;
             margin: 2rem auto;
@@ -149,7 +170,10 @@
 <body>
     <header class="header">
         <h1>Admin Panel - My Order Fellow</h1>
-        <a href="/admin/logout">Logout</a>
+        <div class="header-nav">
+            <a href="/admin/orders" class="btn-orders">View Orders</a>
+            <a href="/admin/logout">Logout</a>
+        </div>
     </header>
 
     <main class="container">
