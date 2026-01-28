@@ -20,7 +20,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            background: #2563eb;
             color: #ffffff;
             padding: 1.5rem 2rem;
         }
@@ -216,7 +216,7 @@
             display: inline-block;
             margin-top: 2rem;
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            background: #2563eb;
             color: #ffffff;
             text-decoration: none;
             border-radius: 8px;
@@ -227,7 +227,7 @@
 
         .btn-back:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(30, 58, 95, 0.3);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
         }
 
         .action-section {

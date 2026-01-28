@@ -14,7 +14,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            background: #ffffff;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -35,7 +35,7 @@
         .logo {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            background: #2563eb;
             border-radius: 16px;
             margin: 0 auto 1.5rem;
             display: flex;
@@ -91,8 +91,8 @@
 
         .form-group input:focus {
             outline: none;
-            border-color: #1e3a5f;
-            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .form-group input::placeholder {
@@ -103,7 +103,7 @@
         .btn-track {
             width: 100%;
             padding: 1rem;
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            background: #2563eb;
             color: #ffffff;
             border: none;
             border-radius: 8px;
@@ -115,7 +115,7 @@
 
         .btn-track:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(30, 58, 95, 0.3);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
         }
 
         .btn-track:active {
@@ -129,7 +129,7 @@
         }
 
         .footer-text a {
-            color: #1e3a5f;
+            color: #2563eb;
             text-decoration: none;
             font-weight: 500;
         }
