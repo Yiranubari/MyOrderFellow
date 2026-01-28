@@ -99,6 +99,16 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller = new \App\Controllers\AdminController();
         $controller->details();
         break;
+
+    case '/track':
+        $controller = new \App\Controllers\TrackingController();
+        $controller->index();
+        break;
+
+    case '/track/result':
+        $controller = new \App\Controllers\TrackingController();
+        $controller->track();
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";
