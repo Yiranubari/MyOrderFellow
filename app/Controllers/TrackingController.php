@@ -16,21 +16,19 @@ class TrackingController
 
     public function track()
     {
-        // 1. Open the POST block ONCE
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            // --- SECURITY CHECK (First Thing) ---
             $userIP = $_SERVER['REMOTE_ADDR'];
             $limiter = new RateLimiter();
 
             if (!$limiter->check($userIP, 5, 60)) {
                 $error = "Too many attempts. Please wait a minute.";
                 require __DIR__ . '/../../views/tracking/search.php';
-                return; // Stop here if blocked
+                return;
             }
-            // ------------------------------------
 
-            // --- BUSINESS LOGIC (Only runs if security passes) ---
+
+
             $trackingId = trim($_POST['tracking_id'] ?? '');
 
             if (empty($trackingId)) {
@@ -53,10 +51,10 @@ class TrackingController
             $history = $trackingModel->getHistoryByOrderId($orderId);
 
             require __DIR__ . '/../../views/tracking/history.php';
-            return; // Stop here so we don't hit the redirect below
+            return;
         }
 
-        // If it wasn't a POST request at all, send them back
+
         header('Location: /track');
         exit();
     }
