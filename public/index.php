@@ -95,6 +95,10 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller->index();
         break;
 
+    case '/admin/order/details':
+        $controller = new \App\Controllers\AdminController();
+        $controller->details();
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";
