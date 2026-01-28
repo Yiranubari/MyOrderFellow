@@ -47,4 +47,12 @@ class Order
             'order_id' => $orderId,
         ]);
     }
+
+    public function getAllOrders()
+    {
+        $sql = "SELECT * FROM orders ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
