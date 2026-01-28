@@ -7,13 +7,14 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\Tracking;
 use App\Services\MailService;
+use App\Core\RateLimiter;
 
 class WebhookController
 {
     public function handleOrder()
     {
         $userIP = $_SERVER['REMOTE_ADDR'];
-        $limiter = new \App\Core\RateLimiter();
+        $limiter = new RateLimiter();
 
         if (!$limiter->check($userIP, 20, 60)) {
             http_response_code(429); // 429 = "Too Many Requests"
