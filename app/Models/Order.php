@@ -63,4 +63,12 @@ class Order
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getOrderByExternalId($externalId)
+    {
+        $sql = "SELECT * FROM orders WHERE external_order_id = :external_order_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':external_order_id' => $externalId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
