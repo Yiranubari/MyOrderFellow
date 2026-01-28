@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\Admin;
 use App\Models\Order;
+use App\Models\Tracking;
+use App\Services\OrderService;
 
 class AdminController
 {
@@ -125,5 +127,48 @@ class AdminController
         $orderModel = new Order();
         $orders = $orderModel->getAllOrders();
         require __DIR__ . '/../../views/admin/orders.php';
+    }
+    public function details()
+    {
+        session_start();
+        if (!isset($_SESSION['admin_id'])) {
+            header('Location: /admin/login');
+            exit();
+        }
+
+        $orderId = $_GET['id'] ?? null;
+        if (!$orderId) {
+            header('Location: /admin/orders');
+            exit();
+        }
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $newStatus = $_POST['status'];
+            $note = $_POST['note'] ?? 'Status updated by Admin';
+
+            $orderModel = new Order();
+            $order = $orderModel->getOrderById($orderId);
+
+            $orderService = new OrderService();
+            $orderService->updateOrderStatus(
+                $orderId,
+                $newStatus,
+                $note,
+                $order['external_order_id'],
+                $order['customer_email']
+            );
+
+            header("Location: /admin/order/details?id=$orderId");
+            exit();
+        }
+
+        $orderModel = new Order();
+        $order = $orderModel->getOrderById($orderId);
+
+        $trackingModel = new Tracking();
+        $history = $trackingModel->getHistoryByOrderId($orderId);
+
+        require __DIR__ . '/../../views/admin/order_details.php';
     }
 }
