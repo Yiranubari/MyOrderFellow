@@ -27,16 +27,18 @@ class TrackingController
             }
             $orderModel = new Order();
             $order = $orderModel->getOrderByTrackingId($trackingId);
+            if (!$order) {
+                $error = "Tracking ID not found.";
+                require __DIR__ . '/../../views/tracking/search.php';
+                return;
+            }
 
-            $trackingId = $order['id'];
+            $orderId = $order['id'];
             $trackingModel = new Tracking();
-            $history = $trackingModel->getHistoryByOrderId($trackingId);
+            $history = $trackingModel->getHistoryByOrderId($orderId);
             require __DIR__ . '/../../views/tracking/history.php';
         }
-        if (!$order) {
-            $error = "Tracking ID not found.";
-            require __DIR__ . '/../../views/tracking/search.php';
-            return;
-        }
+        header('Location: /track');
+        exit();
     }
 }
