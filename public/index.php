@@ -90,6 +90,10 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller = new \App\Controllers\AdminController();
         $controller->reject();
         break;
+    case '/admin/orders':
+        $controller = new \App\Controllers\AdminController();
+        $controller->index();
+        break;
 
     default:
         http_response_code(404);
