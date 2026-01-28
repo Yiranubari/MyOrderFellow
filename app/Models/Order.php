@@ -40,7 +40,7 @@ class Order
 
     public function updateStatus($orderId, $newStatus)
     {
-        $sql = "UPDATE orders SET status = :status, updated_at = NOW() WHERE id = :order_id";
+        $sql = "UPDATE orders SET status = :status WHERE id = :order_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'status' => $newStatus,
