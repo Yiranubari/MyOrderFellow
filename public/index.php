@@ -115,6 +115,11 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller = new \App\Controllers\TrackingController();
         $controller->track();
         break;
+
+    case '/':
+        $controller = new \App\Controllers\HomeController();
+        $controller->index();
+        break;
     default:
         http_response_code(404);
         require __DIR__ . '/../views/404.php';
