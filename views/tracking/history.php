@@ -246,7 +246,6 @@
     </header>
 
     <main class="container">
-        <!-- Status Overview Card -->
         <div class="status-card">
             <div class="tracking-number">Tracking Number</div>
             <div class="tracking-id"><?= htmlspecialchars($order['external_order_id'] ?? '') ?></div>
@@ -269,7 +268,6 @@
             <span class="<?= $badgeClass ?>"><?= htmlspecialchars($order['status'] ?? '') ?></span>
         </div>
 
-        <!-- Timeline Card -->
         <div class="timeline-card">
             <h2>Shipment History</h2>
 
@@ -311,8 +309,6 @@
                 </div>
             <?php endif; ?>
         </div>
-
-        <!-- Action Section -->
         <div class="action-section">
             <a href="/track" class="btn-back">Track Another Package</a>
         </div>
