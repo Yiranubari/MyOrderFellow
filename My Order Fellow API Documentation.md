@@ -26,7 +26,7 @@ This is the main way you'll tell us about a new order placed on your store.
 | **Method**         | `POST`                                |
 | **Authentication** | Required. Use the `X-API-KEY` header. |
 
-### Request Body (What to Send)
+### Request Body
 
 You need to send a JSON payload with the details of the order. Here’s what we need:
 
@@ -57,7 +57,7 @@ You need to send a JSON payload with the details of the order. Here’s what we 
 }
 ```
 
-### Response (What You Get Back)
+### Response
 
 If everything goes well, you'll get a `201 Created` status and a simple JSON response confirming the order was saved in our system.
 
@@ -67,6 +67,17 @@ If everything goes well, you'll get a `201 Created` status and a simple JSON res
   "order_id": 42
 }
 ```
+
+### Error Responses
+
+Sometimes things go wrong. If you get a response other than `201 Created`, here is what it means:
+
+| HTTP Status Code         | Reason                                                 | Response Body Example                                   |
+| :----------------------- | :----------------------------------------------------- | :------------------------------------------------------ |
+| `401 Unauthorized`       | Your `X-API-KEY` is missing or invalid.                | `{"error": "Unauthorized"}`                             |
+| `400 Bad Request`        | The request body you sent was not valid JSON.          | `{"error": "Invalid JSON payload"}`                     |
+| `405 Method Not Allowed` | You used a method other than `POST` (e.g., `GET`).     | `Method Not Allowed` (Plain Text)                       |
+| `429 Too Many Requests`  | You have exceeded the limit of 20 requests per minute. | `{"status": "error", "message": "Rate limit exceeded"}` |
 
 ### Important: Rate Limiting
 
@@ -78,7 +89,7 @@ To keep our system stable, we limit the number of requests. Please be mindful of
 
 ---
 
-## 3. Public Tracking API (Checking Order Status)
+## 3. Public Tracking API
 
 This is the simple way for anyone (especially your customers) to check the status of an order using the unique ID you provided.
 
@@ -105,6 +116,16 @@ If you were using a tool like `curl` or a programming library, you would send th
 ### Response
 
 The system will render an HTML page showing the current status and the full history of the order.
+
+### Error Responses
+
+If the tracking ID is not found or if you make too many requests, the system will display an error message on the page instead of the tracking history.
+
+| Error Message                              | Reason                                                         |
+| :----------------------------------------- | :------------------------------------------------------------- |
+| `Tracking ID not found.`                   | The tracking ID you entered does not exist in our system.      |
+| `Please enter a tracking ID.`              | You submitted the form without entering a tracking ID.         |
+| `Too many attempts. Please wait a minute.` | You have exceeded the limit of 5 tracking requests per minute. |
 
 ### Important: Rate Limiting
 
