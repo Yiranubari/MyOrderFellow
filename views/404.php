@@ -37,7 +37,7 @@
 
 <body>
     <h1>404</h1>
-    <p>Oops! We couldn't find the package (or page) you're looking for.</p>
+    <p>Oops! We couldn't find the page you're looking for.</p>
     <br>
     <a href="/track">Return to Tracking</a>
 </body>
