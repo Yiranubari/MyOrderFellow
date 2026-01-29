@@ -117,6 +117,6 @@ switch ($_SERVER['REQUEST_URI']) {
         break;
     default:
         http_response_code(404);
-        echo "404 Not Found";
+        require __DIR__ . '/views/404.php';
         break;
 }
