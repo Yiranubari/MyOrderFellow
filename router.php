@@ -3,4 +3,4 @@ if (file_exists(__DIR__ . '/' . $_SERVER['REQUEST_URI'])) {
     return false;
 }
 
-require_once 'index.php';
+require_once '../../public/index.php ';
