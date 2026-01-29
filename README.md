@@ -1,6 +1,6 @@
 # My Order Fellow
 
-A professional, modular PHP application for order tracking, partner onboarding, and compliance, built to meet the "ArchSaint Nexus" requirements. The system is engineered with a custom MVC framework, robust authentication, secure API gateway, and event-driven notifications.
+A professional, modular PHP application for order tracking, partner onboarding, and compliance. The system is engineered with a custom MVC framework, robust authentication, secure API gateway, and event-driven notifications.
 
 ## Key Features
 
@@ -21,7 +21,6 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 - **Security Measures:**
   - **Custom Rate Limiter:** All sensitive endpoints (including webhooks and tracking) are protected by a file-based rate limiter, preventing abuse and DoS attacks.
   - **API Key Verification:** Each webhook request is authenticated using a unique API key issued to approved partners.
-  - _(Note: HMAC-SHA256 signature verification is not present in the current codebase. If required, this should be implemented for payload integrity.)_
 - **CLI Simulator:**
   - The `mock_store.php` script simulates external order creation by sending test payloads to the webhook endpoint for integration testing.
 
