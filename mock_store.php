@@ -1,7 +1,7 @@
 <?php
 
 
-$webhookUrl = 'http://localhost:8000/api/webhook';
+$webhookUrl = 'http://localhost:8000/webhook';
 
 
 $apiKey = '97c754a8c11b3adc82166f4369148ea8f0bc4763cfb5ab89';
