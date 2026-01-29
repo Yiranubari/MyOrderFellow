@@ -35,7 +35,9 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
 echo "Sending Order: $externalId ...\n";
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+if (PHP_VERSION_ID < 80000) {
+    curl_close($ch);
+}
 
 echo "HTTP Status: $httpCode\n";
 echo "Response: $response\n";
