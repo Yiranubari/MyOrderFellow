@@ -207,13 +207,11 @@
                                     <td><?= htmlspecialchars($company['contact_person'] ?? '') ?></td>
                                     <td class="actions">
                                         <form method="POST" action="/admin/approve">
-                                            <input type="hidden" name="company_id"
-                                                value="<?= htmlspecialchars($company['id'] ?? '') ?>">
+                                            <input name="company_id" value="<?= htmlspecialchars($company['id'] ?? '') ?>">
                                             <button type="submit" class="btn btn-approve">Approve</button>
                                         </form>
                                         <form method="POST" action="/admin/reject">
-                                            <input type="hidden" name="company_id"
-                                                value="<?= htmlspecialchars($company['id'] ?? '') ?>">
+                                            <input name="company_id" value="<?= htmlspecialchars($company['id'] ?? '') ?>">
                                             <button type="submit" class="btn btn-reject">Reject</button>
                                         </form>
                                     </td>
