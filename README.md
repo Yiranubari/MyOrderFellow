@@ -121,5 +121,3 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 - **Management:** Admins can approve/reject KYC, view orders, and update order statuses at `/admin/dashboard`.
 
 ---
-
-**Note:** For production, review and enhance security (e.g., add HMAC signature verification, HTTPS, and input validation as needed).
