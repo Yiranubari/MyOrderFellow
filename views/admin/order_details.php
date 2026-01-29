@@ -276,7 +276,6 @@
         <a href="/admin/orders" class="back-btn">&larr; Back to Orders</a>
 
         <div class="grid">
-            <!-- Left Column: Order Information -->
             <div class="card">
                 <h2>Order Information</h2>
 
@@ -321,7 +320,6 @@
                     <span class="info-value"><?= htmlspecialchars($order['created_at'] ?? '') ?></span>
                 </div>
 
-                <!-- Update Status Form -->
                 <h2 style="margin-top: 1.5rem;">Update Status</h2>
                 <form method="POST" action="">
                     <div class="form-group">
@@ -348,7 +346,6 @@
                 </form>
             </div>
 
-            <!-- Right Column: Timeline -->
             <div class="card">
                 <h2>Tracking History</h2>
 
