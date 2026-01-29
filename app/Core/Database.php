@@ -24,7 +24,8 @@ class Database
         $this->username = $_ENV['DB_USERNAME'];
         $this->password = $_ENV['DB_PASSWORD'];
 
-        $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->database};";
+
+        $dsn = getenv('DB_URL'); // Update this to match your screenshot!
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
