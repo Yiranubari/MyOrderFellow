@@ -209,8 +209,6 @@
             <ul class="sidebar-nav">
                 <li><a href="/admin/dashboard">Dashboard</a></li>
                 <li><a href="/admin/orders" class="active">Orders</a></li>
-                <li><a href="/admin/users">Users</a></li>
-                <li><a href="/admin/settings">Settings</a></li>
             </ul>
         </aside>
 
