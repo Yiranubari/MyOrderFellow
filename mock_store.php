@@ -4,7 +4,7 @@
 $webhookUrl = 'http://localhost:8000/api/webhook';
 
 
-$apiKey = 'ENTER_YOUR_VALID_API_KEY_HERE';
+$apiKey = '97c754a8c11b3adc82166f4369148ea8f0bc4763cfb5ab89';
 
 $externalId = 'ORD-' . rand(1000, 9999) . '-TEST';
 $customerEmail = 'customer' . rand(1, 100) . '@example.com';
