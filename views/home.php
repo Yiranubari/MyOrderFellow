@@ -18,7 +18,6 @@
         color: #333;
     }
 
-    /* Navbar */
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -49,7 +48,6 @@
         border-radius: 5px;
     }
 
-    /* Hero Section */
     .hero {
         height: 80vh;
         display: flex;
@@ -73,7 +71,6 @@
         opacity: 0.9;
     }
 
-    /* Tracking Box */
     .track-box {
         background: white;
         padding: 10px;
@@ -109,7 +106,7 @@
         background: #0056b3;
     }
 
-    /* Footer */
+
     footer {
         text-align: center;
         padding: 20px;
@@ -146,7 +143,7 @@
     </section>
 
     <footer>
-        <p>&copy; <?php echo date('Y'); ?> Logistics Core System. <a href="/admin/login">Staff Login</a></p>
+        <p>&copy; <?php echo date('Y'); ?> My Order Fellow <a href="/admin/login">Admin Login</a></p>
     </footer>
 
 </body>
