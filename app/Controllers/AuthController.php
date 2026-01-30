@@ -38,20 +38,18 @@ class AuthController
                 return;
             }
 
-
             $otp_code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
 
-            session_start();
-            $_SESSION['pending_registration'] = [
+            $userModel->create([
                 'name' => $name,
                 'email' => $email,
                 'password' => $password,
                 'otp_code' => $otp_code,
-            ];
+            ]);
+
             $_SESSION['verify_email'] = $email;
             $_SESSION['success'] = "Please verify your email to complete registration.";
-
 
             $mailService = new MailService();
             $mailService->sendOTP($email, $otp_code);
@@ -126,57 +124,21 @@ class AuthController
             $email = trim($_POST['email']);
             $otp_code = trim($_POST['otp_code']);
 
+            $userModel = new User();
+            $user = $userModel->findByEmail($email);
 
-            if (isset($_SESSION['pending_registration'])) {
-                $pending = $_SESSION['pending_registration'];
+            if ($user && $user['otp_code'] === $otp_code) {
+                $userModel->verifyUser($email);
 
+                $_SESSION['company_id'] = $user['id'];
+                $_SESSION['company_name'] = $user['name'];
 
-                if ($pending['email'] === $email && $pending['otp_code'] === $otp_code) {
-                    $userModel = new User();
+                unset($_SESSION['verify_email']);
 
-
-                    $userModel->create([
-                        'name' => $pending['name'],
-                        'email' => $pending['email'],
-                        'password' => $pending['password'],
-                        'is_verified' => true,
-                    ]);
-
-
-                    $userModel->verifyUser($email);
-
-
-                    $user = $userModel->findByEmail($email);
-
-
-                    unset($_SESSION['pending_registration']);
-                    unset($_SESSION['verify_email']);
-
-
-                    $_SESSION['company_id'] = $user['id'];
-                    $_SESSION['company_name'] = $user['name'];
-
-                    header('Location: /dashboard');
-                    exit();
-                } else {
-                    $this->error = "Invalid OTP code.";
-                }
+                header('Location: /dashboard');
+                exit();
             } else {
-
-                $userModel = new User();
-                $user = $userModel->findByEmail($email);
-
-                if ($user && $user['otp_code'] === $otp_code) {
-                    $userModel->verifyUser($email);
-
-                    $_SESSION['company_id'] = $user['id'];
-                    $_SESSION['company_name'] = $user['name'];
-
-                    header('Location: /dashboard');
-                    exit();
-                } else {
-                    $this->error = "Invalid OTP code.";
-                }
+                $this->error = "Invalid OTP code.";
             }
         }
         $email = $_SESSION['verify_email'] ?? ($_GET['email'] ?? '');
