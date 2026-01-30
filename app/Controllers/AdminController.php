@@ -44,9 +44,6 @@ class AdminController
             header('Location: /admin/dashboard');
             exit();
         }
-
-
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
@@ -63,8 +60,6 @@ class AdminController
                 $error = "Invalid admin credentials";
             }
         }
-
-
         require __DIR__ . '/../../views/admin/login.php';
     }
 
