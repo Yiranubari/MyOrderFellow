@@ -17,7 +17,7 @@ try {
     $mail->CharSet = 'UTF-8';
 
     $mail->setFrom('noreply@orderfellow.com', 'Mailtrap Test');
-    $mail->addAddress('yiranubari4@gmail.com'); // Change to your email or Mailtrap test address
+    $mail->addAddress('yiranubari4@gmail.com');
     $mail->isHTML(true);
     $mail->Subject = 'Mailtrap SMTP Test';
     $mail->Body = '<h1>This is a test email from Mailtrap SMTP!</h1>';
