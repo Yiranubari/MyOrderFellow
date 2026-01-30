@@ -20,7 +20,7 @@ class RateLimiter
 
     public function check($key)
     {
-        $stmt = $this->pdo->prepare("SELECT count, window_start FROM rate_limits WHERE rate_key = :key");
+        $stmt = $this->pdo->prepare("SELECT count, last_reset FROM rate_limits WHERE key = :key");
         $stmt->execute([':key' => $key]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
