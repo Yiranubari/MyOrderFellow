@@ -40,5 +40,12 @@ class RateLimiter
             $stmt->execute([':now' => $now->format('Y-m-d H:i:s'), ':key' => $key]);
             return true;
         }
+
+        if ($row['count'] < $this->limit) {
+            $stmt = $this->pdo->prepare("UPDATE rate_limits SET count = count + 1 WHERE key = :key");
+            $stmt->execute([':key' => $key]);
+            return true;
+        }
+        return false;
     }
 }
