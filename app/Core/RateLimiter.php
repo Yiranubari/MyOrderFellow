@@ -24,6 +24,8 @@ class RateLimiter
         $stmt->execute([':key' => $key]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $now = new DateTime();
+
         // Default state for a new window or new user
         $data = [
             'start_time' => $current_time,
