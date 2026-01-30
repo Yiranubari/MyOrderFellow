@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Core\Database;
 use App\Models\Order;
 use App\Models\Tracking;
 use App\Core\RateLimiter;
+
 
 class TrackingController
 {
@@ -16,17 +18,18 @@ class TrackingController
 
     public function track()
     {
+        $db = new Database();
+        $pdo = $db->connect();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $rateLimiter = new RateLimiter($pdo, 100, 60);
 
-            $userIP = $_SERVER['REMOTE_ADDR'];
-            $limiter = new RateLimiter();
-
-            if (!$limiter->check($userIP, 5, 60)) {
-                $error = "Too many attempts. Please wait a minute.";
+            $key = $_SERVER['REMOTE_ADDR'];
+            if (!$rateLimiter->check($key)) {
+                $error = "Rate limit exceeded. Please try again later.";
                 require __DIR__ . '/../../views/tracking/search.php';
                 return;
             }
-
             $trackingId = trim($_POST['tracking_id'] ?? '');
 
             if (empty($trackingId)) {
