@@ -1,4 +1,3 @@
-
 <?php
 ob_start();
 
@@ -101,7 +100,7 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller->reject();
         break;
     case '/admin/orders':
-        $controller = new \App\Controllers\AdminController();
+        require __DIR__ . '/../app/Controllers/AdminController.php';
         $controller->index();
         break;
 
