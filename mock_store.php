@@ -1,10 +1,10 @@
 <?php
 
 
-$webhookUrl = 'http://localhost:8000/webhook';
+$webhookUrl = 'https://my-order-fellow.vercel.app/webhook';
 
 
-$apiKey = '97c754a8c11b3adc82166f4369148ea8f0bc4763cfb5ab89';
+$apiKey = 'd13467c0982ea1a3394c1d24892d9ddc3825e168da4bae8b';
 
 $externalId = 'ORD-' . rand(1000, 9999) . '-TEST';
 $customerEmail = 'customer' . rand(1, 100) . '@example.com';

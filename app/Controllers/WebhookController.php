@@ -11,10 +11,13 @@ use App\Core\RateLimiter;
 
 class WebhookController
 {
+
     public function handleOrder()
     {
         $userIP = $_SERVER['REMOTE_ADDR'];
-        $limiter = new RateLimiter();
+        $db = new \App\Core\Database();
+        $pdo = $db->connect();
+        $limiter = new RateLimiter($pdo, 20, 60);
 
         if (!$limiter->check($userIP, 20, 60)) {
             http_response_code(429);
