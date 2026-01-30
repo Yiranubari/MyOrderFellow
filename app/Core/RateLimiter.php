@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Core; // Correct Namespace
+namespace App\Core;
+
+use PDO;
+use DateTime;
 
 class RateLimiter
 {
-    private $cacheDir;
+    protected $pdo;
+    protected $limit;
+    protected $window;
 
-    public function __construct()
+    public function __construct(PDO $pdo, $limit, $window)
     {
-        // Go up two levels from 'Core' to reach root, then into 'cache'
-        $this->cacheDir = __DIR__ . '/../../cache/';
-
-        if (!is_dir($this->cacheDir)) {
-            mkdir($this->cacheDir, 0755, true);
-        }
+        $this->pdo = $pdo;
+        $this->limit = $limit;
+        $this->window = $window;
     }
 
     public function check($key, $limit, $windowSeconds)
