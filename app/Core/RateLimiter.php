@@ -11,7 +11,7 @@ class RateLimiter
     protected $limit;
     protected $window;
 
-    public function __construct(PDO $pdo, $limit, $window)
+    public function __construct(PDO $pdo, $limit = 100, $window = 60)
     {
         $this->pdo = $pdo;
         $this->limit = $limit;
