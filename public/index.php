@@ -101,6 +101,7 @@ switch ($_SERVER['REQUEST_URI']) {
         break;
     case '/admin/orders':
         require __DIR__ . '/../app/Controllers/AdminController.php';
+        $controller = new \App\Controllers\AdminController();
         $controller->index();
         break;
 
