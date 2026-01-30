@@ -38,6 +38,11 @@ class Database
         }
         $dsn .= "dbname={$this->database};sslmode=require";
 
+        // Debug output for troubleshooting
+        error_log("[DEBUG] DSN: $dsn");
+        error_log("[DEBUG] Database: {$this->database}");
+        error_log("[DEBUG] User: {$this->username}");
+
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
