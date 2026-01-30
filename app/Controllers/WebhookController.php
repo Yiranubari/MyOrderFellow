@@ -19,7 +19,7 @@ class WebhookController
         $pdo = $db->connect();
         $limiter = new RateLimiter($pdo, 20, 60);
 
-        if (!$limiter->check($userIP, 20, 60)) {
+        if (!$limiter->check($userIP)) {
             http_response_code(429);
             echo json_encode(['status' => 'error', 'message' => 'Rate limit exceeded']);
             exit();
