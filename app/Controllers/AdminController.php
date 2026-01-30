@@ -40,8 +40,6 @@ class AdminController
     public function login()
     {
         session_start();
-
-
         if (isset($_SESSION['admin_id'])) {
             header('Location: /admin/dashboard');
             exit();
