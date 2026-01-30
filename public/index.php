@@ -41,13 +41,13 @@ switch ($_SERVER['REQUEST_URI']) {
         break;
 
     case '/dashboard/generate-key':
-        require '../app/Controllers/DashboardController.php';
+        require __DIR__ . '/../app/Controllers/DashboardController.php';
         $controller = new DashboardController();
         $controller->generateKey();
         break;
 
     case '/webhook':
-        require '../app/Controllers/WebhookController.php';
+        require __DIR__ . '/../app/Controllers/WebhookController.php';
         $webhookController = new App\Controllers\WebhookController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $webhookController->handleOrder();
@@ -57,44 +57,44 @@ switch ($_SERVER['REQUEST_URI']) {
         }
         break;
 
-    case '/dashboard/submit-kyc';
-        require '../app/Controllers/DashboardController.php';
+    case '/dashboard/submit-kyc':
+        require __DIR__ . '/../app/Controllers/DashboardController.php';
         $controller = new DashboardController();
         $controller->submitKyc();
         break;
 
     case '/admin/register':
-        require '../app/Controllers/AdminController.php';
+        require __DIR__ . '/../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
         $controller->register();
         break;
 
     case '/admin/login':
-        require '../app/Controllers/AdminController.php';
+        require __DIR__ . '/../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
         $controller->login();
         break;
 
     case '/admin/logout':
-        require '../app/Controllers/AdminController.php';
+        require __DIR__ . '/../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
         $controller->logout();
         break;
 
     case '/admin/dashboard':
-        require '../app/Controllers/AdminController.php';
+        require __DIR__ . '/../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
         $controller->dashboard();
         break;
 
     case '/admin/approve':
-        require '../app/Controllers/AdminController.php';
+        require __DIR__ . '/../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
         $controller->approve();
         break;
 
     case '/admin/reject':
-        require '../app/Controllers/AdminController.php';
+        require __DIR__ . '/../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
         $controller->reject();
         break;
