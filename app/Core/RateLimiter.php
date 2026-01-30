@@ -18,10 +18,11 @@ class RateLimiter
         $this->window = $window;
     }
 
-    public function check($key, $limit, $windowSeconds)
+    public function check($key)
     {
-        $file = $this->cacheDir . 'rate_limit_' . md5($key) . '.json';
-        $current_time = time();
+        $stmt = $this->pdo->prepare("SELECT count, window_start FROM rate_limits WHERE rate_key = :key");
+        $stmt->execute([':key' => $key]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Default state for a new window or new user
         $data = [
