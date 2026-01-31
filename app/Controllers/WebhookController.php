@@ -46,7 +46,7 @@ class WebhookController
             'external_order_id' => $data['external_order_id'] ?? '',
             'customer_email' => $data['customer_email'] ?? '',
             'delivery_address' => $data['delivery_address'] ?? '',
-            'items' => json_encode($data['items'] ?? []),
+            'items' => $data['items'] ?? [],
         ];
         $orderId = $orderModel->create($orderData);
         http_response_code(201);
