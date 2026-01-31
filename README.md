@@ -20,7 +20,7 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 - **Webhook Ingestion Point:**
   - Orders are ingested via a `/webhook` endpoint, protected by API key authentication.
 - **Security Measures:**
-  - **Custom Rate Limiter:** All sensitive endpoints are protected by a file-based rate limiter.
+  - **Custom Rate Limiter:** All sensitive endpoints are protected by a PostgreSQL-backed rate limiter (serverless-friendly).
     - **Webhooks:** Limited to 20 requests per minute per IP.
     - **Tracking:** Limited to 5 requests per minute per IP.
   - **API Key Verification:** Each webhook request is authenticated using a unique API key issued to approved partners via the `X-API-KEY` header.
@@ -47,7 +47,7 @@ A professional, modular PHP application for order tracking, partner onboarding, 
   - **Controllers, Models, Views:** Clear separation of concerns for maintainability and testability.
   - **Service Layer:** Business logic (e.g., order status updates, email notifications) is encapsulated in service classes.
   - **Database Abstraction:** A dedicated `Database` class manages PDO connections and queries.
-  - **Rate Limiter:** Implements a file-based singleton pattern to throttle requests per IP, storing state in the `cache/` directory.
+  - **Rate Limiter:** Implements a PostgreSQL-backed singleton pattern to throttle requests per IP, storing state in the database for serverless compatibility.
 
 ## Technical Architecture
 
@@ -55,7 +55,7 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 - **Models:** Encapsulate database operations for users, admins, orders, and tracking history (e.g., `User`, `Admin`, `Order`, `Tracking`).
 - **Views:** Render HTML for authentication, admin, dashboard, and tracking interfaces, organized in a modular structure with shared layouts.
 - **Services:** Contain reusable business logic (e.g., `MailService`, `OrderService`).
-- **Core:** Framework utilities (e.g., `Database`, `RateLimiter`).
+  - **Core:** Framework utilities (e.g., `Database`, `RateLimiter` [PostgreSQL-backed]).
 - **Public:** Entry point (`index.php`) and static assets (CSS, etc.).
 - **Router:** Custom router (`public/index.php`) for clean URL handling.
 
