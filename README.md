@@ -63,7 +63,7 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 
 1. **Clone the Repository:**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/Yiranubari/MyOrderFellow
    cd MyOrderFellow
    ```
 2. **Install Dependencies:**
