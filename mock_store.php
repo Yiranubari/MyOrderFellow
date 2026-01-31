@@ -4,7 +4,7 @@
 $webhookUrl = 'https://my-order-fellow.vercel.app/webhook';
 
 
-$apiKey = 'd13467c0982ea1a3394c1d24892d9ddc3825e168da4bae8b';
+$apiKey = '4b3ece9e357d7f3ce108ab74f8628a1432cff70a4ea0ecb2';
 
 $externalId = 'ORD-' . rand(1000, 9999) . '-TEST';
 $customerEmail = 'customer' . rand(1, 100) . '@example.com';
