@@ -51,19 +51,19 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 
 ## Technical Architecture
 
-- **Controllers:** Handle HTTP requests, session management, and invoke business logic (e.g., `WebhookController`, `AuthController`).
-- **Models:** Encapsulate database operations for users, admins, orders, and tracking history.
-- **Views:** Render HTML for authentication, admin, dashboard, and tracking interfaces.
+- **Controllers:** Handle HTTP requests, session management, and invoke business logic (e.g., `WebhookController`, `AuthController`, `AdminController`, `DashboardController`, `TrackingController`, `HomeController`).
+- **Models:** Encapsulate database operations for users, admins, orders, and tracking history (e.g., `User`, `Admin`, `Order`, `Tracking`).
+- **Views:** Render HTML for authentication, admin, dashboard, and tracking interfaces, organized in a modular structure with shared layouts.
 - **Services:** Contain reusable business logic (e.g., `MailService`, `OrderService`).
 - **Core:** Framework utilities (e.g., `Database`, `RateLimiter`).
-- **Public:** Entry point (`index.php`) and static assets.
+- **Public:** Entry point (`index.php`) and static assets (CSS, etc.).
 - **Router:** Custom router (`public/index.php`) for clean URL handling.
 
 ## Installation & Setup
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/Yiranubari/MyOrderFellow
+   git clone <repo-url>
    cd MyOrderFellow
    ```
 2. **Install Dependencies:**
