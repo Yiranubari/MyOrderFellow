@@ -265,6 +265,23 @@
         <div class="nav-links">
             <a href="/login">Partner Login</a>
             <a href="/register" class="btn">Partner Sign Up</a>
+            <a href="/admin/register" class="btn admin-btn">Admin Sign Up</a>
+            .admin-btn {
+            background: var(--primary-dark);
+            color: #fff;
+            margin-left: 0.5rem;
+            border: none;
+            padding: 0.625rem 1.25rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+            }
+
+            .admin-btn:hover {
+            background: #22223b;
+            }
         </div>
     </nav>
 
