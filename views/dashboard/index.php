@@ -58,7 +58,13 @@
                             <?php foreach ($orders as $order): ?>
                                 <?php
                                 $items = json_decode($order['items'] ?? '[]', true);
-                                $itemsList = is_array($items) ? implode(', ', $items) : '';
+                                if (is_array($items)) {
+                                    $itemsList = implode(', ', array_map(function ($item) {
+                                        return isset($item['name']) ? $item['name'] . (isset($item['qty']) ? ' (x' . $item['qty'] . ')' : '') : '';
+                                    }, $items));
+                                } else {
+                                    $itemsList = '';
+                                }
                                 ?>
                                 <tr style="border-bottom: 1px solid #e5e7eb;">
                                     <td style="padding: 0.75rem; color: #1f2937;">
