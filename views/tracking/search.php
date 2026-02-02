@@ -154,19 +154,10 @@
 
         <form method="POST" action="/track/result">
             <div class="form-group">
-                <input
-                    type="text"
-                    name="tracking_id"
-                    placeholder="Enter tracking number"
-                    required
-                    autocomplete="off">
+                <input type="text" name="tracking_id" placeholder="Enter tracking number" required autocomplete="off">
             </div>
             <button type="submit" class="btn-track">Track Package</button>
         </form>
-
-        <p class="footer-text">
-            Need help? <a href="/contact">Contact Support</a>
-        </p>
     </div>
 </body>
 
