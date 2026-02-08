@@ -18,10 +18,12 @@ class Database
 
     public function __construct()
     {
-        $connectionUrl = getenv('DB_URL') ?: getenv('DATABASE_URL');
+        // Try multiple possible environment variable names (Vercel uses POSTGRES_URL)
+        $connectionUrl = $_ENV['POSTGRES_URL'] ?? $_ENV['DB_URL'] ??
+            getenv('POSTGRES_URL') ?: getenv('DB_URL') ?: getenv('DATABASE_URL');
 
         if (!$connectionUrl) {
-            die("Error: DB_URL environment variable is not set.");
+            die("Error: Database URL environment variable is not set.");
         }
 
         $db = parse_url($connectionUrl);

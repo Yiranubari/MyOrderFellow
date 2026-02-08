@@ -25,10 +25,25 @@ if (!$dbUrl) {
 }
 
 echo "Connecting to database...\n";
+echo "DB URL: " . substr($dbUrl, 0, 30) . "...\n";
 
 try {
-    $pdo = new PDO($dbUrl);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Convert postgresql:// to pgsql:// for PHP PDO
+    $connectionString = str_replace('postgresql://', 'pgsql://', $dbUrl);
+
+    // Parse and reconstruct the connection string
+    $parsed = parse_url($dbUrl);
+    $dsn = sprintf(
+        "pgsql:host=%s;port=%d;dbname=%s;sslmode=require",
+        $parsed['host'],
+        $parsed['port'] ?? 5432,
+        ltrim($parsed['path'], '/')
+    );
+
+    $pdo = new PDO($dsn, $parsed['user'], $parsed['pass'], [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
     echo "✓ Connected successfully!\n\n";
 } catch (PDOException $e) {
     die("✗ Connection failed: " . $e->getMessage() . "\n");
