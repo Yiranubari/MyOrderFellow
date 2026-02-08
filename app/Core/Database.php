@@ -19,16 +19,16 @@ class Database
     public function __construct()
     {
         // Ensure environment variables are loaded
-        if (!isset($_ENV['DB_URL']) && !isset($_ENV['POSTGRES_URL'])) {
+        if (!isset($_ENV['DB_URL']) && !isset($_ENV['POSTGRES_URL']) && !isset($_ENV['DB_DATABASE_URL'])) {
             if (file_exists(__DIR__ . '/../../.env')) {
                 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
                 $dotenv->load();
             }
         }
 
-        // Try multiple possible environment variable names (Vercel uses POSTGRES_URL)
-        $connectionUrl = $_ENV['POSTGRES_URL'] ?? $_ENV['DB_URL'] ??
-            getenv('POSTGRES_URL') ?: getenv('DB_URL') ?: getenv('DATABASE_URL');
+        // Try multiple possible environment variable names (check Vercel's custom names first)
+        $connectionUrl = $_ENV['DB_DATABASE_URL'] ?? $_ENV['POSTGRES_URL'] ?? $_ENV['DB_URL'] ??
+            getenv('DB_DATABASE_URL') ?: getenv('POSTGRES_URL') ?: getenv('DB_URL') ?: getenv('DATABASE_URL');
 
         if (!$connectionUrl) {
             die("Error: Database URL environment variable is not set.");
