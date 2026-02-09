@@ -18,7 +18,6 @@ class Database
 
     public function __construct()
     {
-        // Ensure environment variables are loaded
         if (!isset($_ENV['DB_URL']) && !isset($_ENV['POSTGRES_URL']) && !isset($_ENV['DB_DATABASE_URL'])) {
             if (file_exists(__DIR__ . '/../../.env')) {
                 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
@@ -26,7 +25,6 @@ class Database
             }
         }
 
-        // Try multiple possible environment variable names (check Vercel's custom names first)
         $connectionUrl = $_ENV['DB_DATABASE_URL'] ?? $_ENV['POSTGRES_URL'] ?? $_ENV['DB_URL'] ??
             getenv('DB_DATABASE_URL') ?: getenv('POSTGRES_URL') ?: getenv('DB_URL') ?: getenv('DATABASE_URL');
 
@@ -48,10 +46,6 @@ class Database
         }
         $dsn .= "dbname={$this->database};sslmode=require";
 
-        // Debug output for troubleshooting
-        error_log("[DEBUG] DSN: $dsn");
-        error_log("[DEBUG] Database: {$this->database}");
-        error_log("[DEBUG] User: {$this->username}");
 
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
