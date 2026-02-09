@@ -22,7 +22,7 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 - **Security Measures:**
   - **Custom Rate Limiter:** All sensitive endpoints are protected by a PostgreSQL-backed rate limiter (serverless-friendly).
     - **Webhooks:** Limited to 20 requests per minute per IP.
-    - **Tracking:** Limited to 5 requests per minute per IP.
+    - **Tracking:** Limited to 100 requests per minute per IP.
   - **API Key Verification:** Each webhook request is authenticated using a unique API key issued to approved partners via the `X-API-KEY` header.
 - **CLI Simulator:**
   - The `mock_store.php` script simulates external order creation by sending test payloads to the webhook endpoint for integration testing.
@@ -55,9 +55,10 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 - **Models:** Encapsulate database operations for users, admins, orders, and tracking history (e.g., `User`, `Admin`, `Order`, `Tracking`).
 - **Views:** Render HTML for authentication, admin, dashboard, and tracking interfaces, organized in a modular structure with shared layouts.
 - **Services:** Contain reusable business logic (e.g., `MailService`, `OrderService`).
-  - **Core:** Framework utilities (e.g., `Database`, `RateLimiter` [PostgreSQL-backed]).
+- **Core:** Framework utilities (e.g., `Database`, `RateLimiter` [PostgreSQL-backed]).
 - **Public:** Entry point (`index.php`) and static assets (CSS, etc.).
 - **Router:** Custom router (`public/index.php`) for clean URL handling.
+- **Vercel Integration:** Optimized for serverless deployment with `vercel.json` and `api/index.php` entry point.
 
 ## Installation & Setup
 
@@ -89,7 +90,7 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 
 4. **Database Setup:**
    - Create a PostgreSQL database.
-   - Ensure tables for `companies`, `admins`, `orders`, and `tracking_history` are created (see `app/Models` for schema requirements).
+   - Run the migration script `migrate.sql` to set up all tables (see `migrate_database.php` for automated setup).
 5. **Start the Development Server:**
    ```bash
    php -S localhost:8000 -t public router.php
