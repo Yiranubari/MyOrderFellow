@@ -1,5 +1,5 @@
 <?php
-// Simple Mailtrap SMTP test script
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
