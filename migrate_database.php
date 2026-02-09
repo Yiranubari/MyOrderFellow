@@ -56,7 +56,7 @@ echo "-------------------\n";
 try {
     // Execute the entire migration
     $pdo->exec($sql);
-    echo "✓ All tables created successfully!\n\n";
+    echo "All tables created successfully!\n\n";
 
     // Verify tables
     echo "Verifying tables...\n";
@@ -67,13 +67,13 @@ try {
         $exists = $stmt->fetchColumn();
 
         if ($exists) {
-            echo "✓ Table '$table' exists\n";
+            echo "Table '$table' exists\n";
         } else {
-            echo "✗ Table '$table' not found\n";
+            echo "Table '$table' not found\n";
         }
     }
 
     echo "\n=== Migration completed successfully! ===\n";
 } catch (PDOException $e) {
-    die("\n✗ Migration failed: " . $e->getMessage() . "\n");
+    die("\nMigration failed: " . $e->getMessage() . "\n");
 }
