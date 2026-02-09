@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Database Migration Script
- * Run this script to set up all tables in your Vercel Neon database
- * 
- * Usage: php migrate_database.php
- */
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
