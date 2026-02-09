@@ -1,6 +1,3 @@
--- Migration script for My Order Fellow
--- Run this to set up all tables in your Vercel Neon database
-
 -- 1. Companies table (for partners/users)
 CREATE TABLE IF NOT EXISTS companies (
     id SERIAL PRIMARY KEY,
