@@ -37,15 +37,15 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
     ]);
-    echo "✓ Connected successfully!\n\n";
+    echo "Connected successfully!\n\n";
 } catch (PDOException $e) {
-    die("✗ Connection failed: " . $e->getMessage() . "\n");
+    die("Connection failed: " . $e->getMessage() . "\n");
 }
 
 // Read migration SQL file
 $sqlFile = __DIR__ . '/migrate.sql';
 if (!file_exists($sqlFile)) {
-    die("✗ Migration file not found: $sqlFile\n");
+    die("Migration file not found: $sqlFile\n");
 }
 
 $sql = file_get_contents($sqlFile);
