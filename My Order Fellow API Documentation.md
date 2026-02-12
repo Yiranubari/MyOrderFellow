@@ -131,7 +131,7 @@ If the tracking ID is not found or if you make too many requests, the system wil
 
 Even though this is a public endpoint, we have a limit to prevent abuse:
 
-- **Limit:** You can check the status up to **100 times per minute** from a single IP address.
+- **Limit:** You can check the status up to **10 times per minute** from a single IP address.
 
 - **What happens if you exceed it:** The system will display an error message: "Rate limit exceeded. Please try again later."
 
