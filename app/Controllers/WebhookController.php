@@ -17,7 +17,7 @@ class WebhookController
         $userIP = $_SERVER['REMOTE_ADDR'];
         $db = new \App\Core\Database();
         $pdo = $db->connect();
-        $limiter = new RateLimiter($pdo, 20, 60);
+        $limiter = new RateLimiter($pdo, 10, 60);
 
         if (!$limiter->check($userIP)) {
             http_response_code(429);
