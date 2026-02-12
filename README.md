@@ -21,8 +21,8 @@ A professional, modular PHP application for order tracking, partner onboarding, 
   - Orders are ingested via a `/webhook` endpoint, protected by API key authentication.
 - **Security Measures:**
   - **Custom Rate Limiter:** All sensitive endpoints are protected by a PostgreSQL-backed rate limiter (serverless-friendly).
-    - **Webhooks:** Limited to 20 requests per minute per IP.
-    - **Tracking:** Limited to 100 requests per minute per IP.
+    - **Webhooks:** Limited to 10 requests per minute per IP.
+    - **Tracking:** Limited to 10 requests per minute per IP.
   - **API Key Verification:** Each webhook request is authenticated using a unique API key issued to approved partners via the `X-API-KEY` header.
 - **CLI Simulator:**
   - The `mock_store.php` script simulates external order creation by sending test payloads to the webhook endpoint for integration testing.
