@@ -1,4 +1,3 @@
--- 1. Companies table (for partners/users)
 CREATE TABLE IF NOT EXISTS companies (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -14,7 +13,6 @@ CREATE TABLE IF NOT EXISTS companies (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. Admins table
 CREATE TABLE IF NOT EXISTS admins (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -23,7 +21,6 @@ CREATE TABLE IF NOT EXISTS admins (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. Orders table
 CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
     company_id INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
@@ -36,7 +33,6 @@ CREATE TABLE IF NOT EXISTS orders (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 4. Tracking history table
 CREATE TABLE IF NOT EXISTS tracking_history (
     id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
@@ -45,7 +41,6 @@ CREATE TABLE IF NOT EXISTS tracking_history (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 5. Rate limits table (for serverless rate limiting)
 CREATE TABLE IF NOT EXISTS rate_limits (
     id SERIAL PRIMARY KEY,
     key VARCHAR(255) UNIQUE NOT NULL,
@@ -54,7 +49,6 @@ CREATE TABLE IF NOT EXISTS rate_limits (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_companies_email ON companies(email);
 CREATE INDEX IF NOT EXISTS idx_companies_api_secret ON companies(api_secret);
 CREATE INDEX IF NOT EXISTS idx_orders_company_id ON orders(company_id);
