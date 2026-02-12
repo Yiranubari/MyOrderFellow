@@ -15,9 +15,6 @@ if ($uri !== '/' && file_exists($staticFile) && is_file($staticFile)) {
         'gif' => 'image/gif',
         'svg' => 'image/svg+xml',
         'ico' => 'image/x-icon',
-        'woff' => 'font/woff',
-        'woff2' => 'font/woff2',
-        'ttf' => 'font/ttf',
     ];
     $ext = pathinfo($staticFile, PATHINFO_EXTENSION);
     $mime = $mimeTypes[$ext] ?? 'application/octet-stream';
