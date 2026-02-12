@@ -22,7 +22,7 @@ class TrackingController
         $pdo = $db->connect();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $rateLimiter = new RateLimiter($pdo, 100, 60);
+            $rateLimiter = new RateLimiter($pdo, 5, 60);
 
             $key = $_SERVER['REMOTE_ADDR'];
             if (!$rateLimiter->check($key)) {
