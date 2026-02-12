@@ -14,7 +14,7 @@ $payload = [
     'customer_email' => $customerEmail,
     'delivery_address' => '123 Fake Street, Lagos, Nigeria',
     'items' => [
-        ['name' => 'Wireless Mouse', 'qty' => 1],
+        ['name' => 'Mouse', 'qty' => 1],
         ['name' => 'Mechanical Keyboard', 'qty' => 1]
     ]
 ];
