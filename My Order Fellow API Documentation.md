@@ -6,8 +6,6 @@ Welcome to the My Order Fellow API!
 
 ## 1. Getting Started: Your API Key
 
-Think of your **API Key** as your secret handshake. It tells our system who you are and that you're allowed to send us data.
-
 You'll find your unique API Key in your Partner Dashboard after your KYC application has been approved by our admin team.
 
 **How to use it:** You must include this key in a special header called `X-API-KEY` for every request you send to our Webhook.
