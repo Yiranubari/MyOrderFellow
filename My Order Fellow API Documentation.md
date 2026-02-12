@@ -83,7 +83,7 @@ Sometimes things go wrong. If you get a response other than `201 Created`, here 
 
 To keep our system stable, we limit the number of requests. Please be mindful of this:
 
-- **Limit:** You can send up to **20 requests per minute** from a single IP address.
+- **Limit:** You can send up to **10 requests per minute** from a single IP address.
 
 - **What happens if you exceed it:** You will receive a `429 Too Many Requests` status. Just wait a minute and try again!
 
