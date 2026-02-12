@@ -121,18 +121,18 @@ The system will render an HTML page showing the current status and the full hist
 
 If the tracking ID is not found or if you make too many requests, the system will display an error message on the page instead of the tracking history.
 
-| Error Message                              | Reason                                                         |
-| :----------------------------------------- | :------------------------------------------------------------- |
-| `Tracking ID not found.`                   | The tracking ID you entered does not exist in our system.      |
-| `Please enter a tracking ID.`              | You submitted the form without entering a tracking ID.         |
-| `Too many attempts. Please wait a minute.` | You have exceeded the limit of 5 tracking requests per minute. |
+| Error Message                                  | Reason                                                           |
+| :--------------------------------------------- | :--------------------------------------------------------------- |
+| `Tracking ID not found.`                       | The tracking ID you entered does not exist in our system.        |
+| `Please enter a tracking ID.`                  | You submitted the form without entering a tracking ID.           |
+| `Rate limit exceeded. Please try again later.` | You have exceeded the limit of 100 tracking requests per minute. |
 
 ### Important: Rate Limiting
 
 Even though this is a public endpoint, we have a limit to prevent abuse:
 
-- **Limit:** You can check the status up to **5 times per minute** from a single IP address.
+- **Limit:** You can check the status up to **100 times per minute** from a single IP address.
 
-- **What happens if you exceed it:** The system will display an error message: "Too many attempts. Please wait a minute."
+- **What happens if you exceed it:** The system will display an error message: "Rate limit exceeded. Please try again later."
 
 ---
