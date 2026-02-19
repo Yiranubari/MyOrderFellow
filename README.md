@@ -82,7 +82,6 @@ A professional, modular PHP application for order tracking, partner onboarding, 
     DB_USERNAME=your_user
     DB_PASSWORD=your_password
 
-    ## SMTP (Gmail)
 
     SMTP_HOST=smtp.gmail.com
     SMTP_PORT=587
