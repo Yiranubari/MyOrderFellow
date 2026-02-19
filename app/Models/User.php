@@ -103,4 +103,11 @@ class User
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['kyc_status'] : 'pending';
     }
+
+    public function updateOtpCode($email, $otp)
+    {
+        $sql = "UPDATE companies SET otp_code = :otp_code WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([':otp_code' => $otp, ':email' => $email]);
+    }
 }
