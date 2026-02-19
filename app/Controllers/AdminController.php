@@ -100,7 +100,7 @@ class AdminController
                 $adminModel = new Admin();
                 $adminModel->updateKycStatus($companyId, 'approved');
                 $mailService = new \App\Services\MailService();
-                $email = $adminModel->getEmailByCompanyId($companyId);
+                $email = $adminModel->findEmailByCompanyId($companyId);
                 $mailService->sendKycApproval($email);
             }
         }
