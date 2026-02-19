@@ -59,4 +59,17 @@ class MailService
         $this->mail->send();
         return true;
     }
+
+    public function sendKycApproval($recipientEmail)
+    {
+        $this->mail->clearAddresses();
+        $fromEmail = getenv('SMTP_FROM_ADDRESS') ?: $_ENV['SMTP_FROM_ADDRESS'] ?? 'yiranubari4@gmail.com';
+        $this->mail->setFrom($fromEmail, 'My Order Fellow');
+        $this->mail->addAddress($recipientEmail);
+        $this->mail->isHTML(true);
+        $this->mail->Subject = 'KYC Approval Notification';
+        $this->mail->Body = "<h1>KYC Approval Notification</h1><p>Your KYC application has been approved.</p>";
+        $this->mail->send();
+        return true;
+    }
 }
