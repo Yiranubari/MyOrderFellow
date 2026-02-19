@@ -19,6 +19,7 @@ class AdminController
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $secret = $_POST['admin_secret'] ?? '';
 
             if ($secret !== $systemSecret) {
@@ -27,7 +28,7 @@ class AdminController
                 return;
             }
             $adminModel = new Admin();
-            if ($adminModel->create($name, $email, $password)) {
+            if ($adminModel->create($name, $email, $hashedPassword)) {
                 header('Location: /admin/login');
                 exit();
             } else {
