@@ -21,7 +21,7 @@ class AuthController
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = trim($_POST['password'] ?? '');
-            $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             if (empty($name) || empty($email) || empty($password)) {
                 $this->error = "All fields are required.";
@@ -45,7 +45,7 @@ class AuthController
             $userModel->create([
                 'name' => $name,
                 'email' => $email,
-                'password' => $hashPassword,
+                'password' => $hashedPassword,
                 'otp_code' => $otp_code,
             ]);
 
