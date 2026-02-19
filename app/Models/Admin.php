@@ -61,4 +61,13 @@ class Admin
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([':status' => $status, ':company_id' => $companyId]);
     }
+
+    public function findEmailByCompanyId($companyId)
+    {
+        $sql = "SELECT email FROM companies WHERE id = :company_id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':company_id' => $companyId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['email'] : null;
+    }
 }
