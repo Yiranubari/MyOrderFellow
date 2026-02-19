@@ -75,7 +75,7 @@ Sometimes things go wrong. If you get a response other than `201 Created`, here 
 | `401 Unauthorized`       | Your `X-API-KEY` is missing or invalid.                | `{"error": "Unauthorized"}`                             |
 | `400 Bad Request`        | The request body you sent was not valid JSON.          | `{"error": "Invalid JSON payload"}`                     |
 | `405 Method Not Allowed` | You used a method other than `POST` (e.g., `GET`).     | `Method Not Allowed` (Plain Text)                       |
-| `429 Too Many Requests`  | You have exceeded the limit of 20 requests per minute. | `{"status": "error", "message": "Rate limit exceeded"}` |
+| `429 Too Many Requests`  | You have exceeded the limit of 10 requests per minute. | `{"status": "error", "message": "Rate limit exceeded"}` |
 
 ### Important: Rate Limiting
 
@@ -119,11 +119,11 @@ The system will render an HTML page showing the current status and the full hist
 
 If the tracking ID is not found or if you make too many requests, the system will display an error message on the page instead of the tracking history.
 
-| Error Message                                  | Reason                                                           |
-| :--------------------------------------------- | :--------------------------------------------------------------- |
-| `Tracking ID not found.`                       | The tracking ID you entered does not exist in our system.        |
-| `Please enter a tracking ID.`                  | You submitted the form without entering a tracking ID.           |
-| `Rate limit exceeded. Please try again later.` | You have exceeded the limit of 100 tracking requests per minute. |
+| Error Message                                  | Reason                                                          |
+| :--------------------------------------------- | :-------------------------------------------------------------- |
+| `Tracking ID not found.`                       | The tracking ID you entered does not exist in our system.       |
+| `Please enter a tracking ID.`                  | You submitted the form without entering a tracking ID.          |
+| `Rate limit exceeded. Please try again later.` | You have exceeded the limit of 10 tracking requests per minute. |
 
 ### Important: Rate Limiting
 
