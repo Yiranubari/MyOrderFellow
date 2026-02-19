@@ -96,11 +96,17 @@ php -S localhost:8000 -t public router.php
 # SMTP (Gmail)
 
 SMTP_HOST=smtp.gmail.com
+
 SMTP_PORT=587
+
 SMTP_USERNAME=your_gmail_address@gmail.com
+
 SMTP_PASSWORD=your_gmail_app_password
+
 SMTP_ENCRYPTION=tls
+
 SMTP_FROM_EMAIL=your_gmail_address@gmail.com
+
 SMTP_FROM_NAME=My Order Fellow
 
 ## Usage Guide
