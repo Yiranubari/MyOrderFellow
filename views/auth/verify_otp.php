@@ -33,10 +33,13 @@
         <button type="submit" class="btn">Verify Code</button>
     </form>
 
-    <form action="/resend-otp" method="POST" style="margin-top: 1rem;">
+    <p style="text-align: center; margin-top: 1.5rem; font-size: 0.875rem; color: #6b7280;">
+        Didn't receive the code?
+    <form action="/resend-otp" method="POST" style="display: inline;">
         <input type="hidden" name="email" value="<?= htmlspecialchars($_SESSION['verify_email'] ?? '') ?>">
-        <button type="submit" class="btn btn-secondary" style="background-color: #6b7280;">Resend OTP</button>
+        <button type="submit" style="background: none; border: none; color: #3b82f6; cursor: pointer; font-size: 0.875rem; padding: 0; text-decoration: underline;">Resend OTP</button>
     </form>
+    </p>
 
     <p style="text-align: center; margin-top: 1rem;">
         Wrong email? <a href="/register">Register again</a>
