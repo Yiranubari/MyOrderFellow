@@ -14,6 +14,7 @@ A professional, modular PHP application for order tracking, partner onboarding, 
   - **Admin Registration:** Requires a system-level secret key (`MOF-MASTER-KEY`) for secure onboarding of administrative staff.
 - **OTP/Email Verification:**
   - User registration triggers an OTP sent via email. Registration is only completed after OTP verification, ensuring email authenticity.
+  - Includes a resend OTP action from the verification screen (`/resend-otp`).
 
 ### 2. API Gateway & Webhooks
 
@@ -37,8 +38,9 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 ### 4. Notifications
 
 - **Event-Driven Email System:**
+  **Event-Driven Email System:**
   - Email notifications are sent for OTP verification, order confirmation, and order status updates, using the `MailService` class (PHPMailer-based).
-  - Supports SMTP configuration with fallback to Mailtrap for development.
+  - Supports SMTP configuration (Mailtrap for development, Gmail/other SMTP providers for production).
 
 ### 5. Architecture
 
@@ -74,19 +76,31 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 3. **Environment Configuration:**
    - Create a `.env` file in the root directory with the following variables:
 
-     ```env
-     DB_HOST=localhost
-     DB_PORT=5432
-     DB_DATABASE=your_db
-     DB_USERNAME=your_user
-     DB_PASSWORD=your_password
+   ```env
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_DATABASE=your_db
+    DB_USERNAME=your_user
+    DB_PASSWORD=your_password
 
-     SMTP_HOST=sandbox.smtp.mailtrap.io
-     SMTP_PORT=2525
-     SMTP_USERNAME=your_smtp_user
-     SMTP_PASSWORD=your_smtp_pass
-     SMTP_FROM_EMAIL=noreply@orderfellow.com
-     ```
+   # SMTP (Development example: Mailtrap)
+   SMTP_HOST=sandbox.smtp.mailtrap.io
+   SMTP_PORT=2525
+   SMTP_USERNAME=your_smtp_user
+   SMTP_PASSWORD=your_smtp_pass
+   SMTP_ENCRYPTION=tls
+   SMTP_FROM_EMAIL=noreply@orderfellow.com
+   SMTP_FROM_NAME=My Order Fellow
+
+   # SMTP (Production example: Gmail)
+   # SMTP_HOST=smtp.gmail.com
+   # SMTP_PORT=587
+   # SMTP_USERNAME=your_gmail_address@gmail.com
+   # SMTP_PASSWORD=your_gmail_app_password
+   # SMTP_ENCRYPTION=tls
+   # SMTP_FROM_EMAIL=your_gmail_address@gmail.com
+   # SMTP_FROM_NAME=My Order Fellow
+   ```
 
 4. **Database Setup:**
    - Create a PostgreSQL database.
@@ -102,6 +116,11 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 
 - Register as a company at `/register` and complete the KYC form in the dashboard.
 - Await admin approval. Admins manage applications at `/admin/dashboard`.
+
+### OTP Verification
+
+- After registration/login (if not verified), you’ll be redirected to `/verify`.
+- If you didn’t receive the code, use the resend action on the verification page (POST `/resend-otp`).
 
 ### API/Webhook Integration
 
