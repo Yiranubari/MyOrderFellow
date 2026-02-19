@@ -121,7 +121,7 @@ switch ($_SERVER['REQUEST_URI']) {
         break;
 
     case '/resend-otp':
-        $controller = new \App\Controllers\AuthController();
+        $controller = new AuthController();
         $controller->resendOtp();
         break;
 
