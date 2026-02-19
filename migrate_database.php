@@ -4,13 +4,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-// Load environment variables
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 echo "=== My Order Fellow Database Migration ===\n\n";
 
-// Get database connection from environment
 $dbUrl = $_ENV['DB_URL'] ?? null;
 
 if (!$dbUrl) {
@@ -21,10 +19,8 @@ echo "Connecting to database...\n";
 echo "DB URL: " . substr($dbUrl, 0, 30) . "...\n";
 
 try {
-    // Convert postgresql:// to pgsql:// for PHP PDO
     $connectionString = str_replace('postgresql://', 'pgsql://', $dbUrl);
 
-    // Parse and reconstruct the connection string
     $parsed = parse_url($dbUrl);
     $dsn = sprintf(
         "pgsql:host=%s;port=%d;dbname=%s;sslmode=require",
@@ -42,7 +38,6 @@ try {
     die("Connection failed: " . $e->getMessage() . "\n");
 }
 
-// Read migration SQL file
 $sqlFile = __DIR__ . '/migrate.sql';
 if (!file_exists($sqlFile)) {
     die("Migration file not found: $sqlFile\n");
@@ -54,11 +49,9 @@ echo "Running migrations...\n";
 echo "-------------------\n";
 
 try {
-    // Execute the entire migration
     $pdo->exec($sql);
     echo "All tables created successfully!\n\n";
 
-    // Verify tables
     echo "Verifying tables...\n";
     $tables = ['companies', 'admins', 'orders', 'tracking_history', 'rate_limits'];
 

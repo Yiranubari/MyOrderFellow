@@ -13,12 +13,12 @@ class MailService
     {
         $this->mail = new PHPMailer(true);
         $this->mail->isSMTP();
-        $this->mail->Host = getenv('SMTP_HOST') ?: $_ENV['SMTP_HOST'] ?? 'sandbox.smtp.mailtrap.io';
+        $this->mail->Host = getenv('SMTP_HOST') ?: $_ENV['SMTP_HOST'] ?? 'smtp.gmail.com';
         $this->mail->SMTPAuth = true;
         $this->mail->Username = getenv('SMTP_USERNAME') ?: $_ENV['SMTP_USERNAME'] ?? '';
         $this->mail->Password = getenv('SMTP_PASSWORD') ?: $_ENV['SMTP_PASSWORD'] ?? '';
-        $this->mail->Port = getenv('SMTP_PORT') ?: $_ENV['SMTP_PORT'] ?? 2525;
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $this->mail->Port = getenv('SMTP_PORT') ?: $_ENV['SMTP_PORT'] ?? 456;
+        $this->mail->SMTPSecure = getenv('SMTP_ENCRYPTION') ?: $_ENV['SMTP_ENCRYPTION'] ?? PHPMailer::ENCRYPTION_STARTTLS;
         $this->mail->CharSet = 'UTF-8';
     }
 
