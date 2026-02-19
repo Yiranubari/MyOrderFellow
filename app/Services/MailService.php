@@ -28,7 +28,7 @@ class MailService
         $this->mail->setFrom($fromEmail, 'My Order Fellow');
         $this->mail->addAddress($recipientEmail);
         $this->mail->isHTML(true);
-        $this->mail->Subject = 'Your OTP Code';
+        $this->mail->Subject = 'OTP Code';
         $this->mail->Body = "<h1>Your OTP Code</h1><p>Your OTP code is: <strong>$otp</strong></p>";
         $this->mail->send();
         return true;
