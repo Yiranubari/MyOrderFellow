@@ -4,16 +4,23 @@
     <h2 style="text-align: center; margin-bottom: 1.5rem;">Verify Account</h2>
 
     <?php if (isset($_SESSION['success']) && !empty($_SESSION['success'])): ?>
-        <div class="alert alert-success">
-            <?= htmlspecialchars($_SESSION['success']) ?>
-        </div>
-        <?php unset($_SESSION['success']); ?>
+    <div class="alert alert-success">
+        <?= htmlspecialchars($_SESSION['success']) ?>
+    </div>
+    <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
 
     <?php if (isset($error) && !empty($error)): ?>
-        <div class="alert alert-error">
-            <?= htmlspecialchars($error) ?>
-        </div>
+    <div class="alert alert-error">
+        <?= htmlspecialchars($error) ?>
+    </div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error']) && !empty($_SESSION['error'])): ?>
+    <div class="alert alert-error">
+        <?= htmlspecialchars($_SESSION['error']) ?>
+    </div>
+    <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
 
     <p style="text-align: center; margin-bottom: 1.5rem; color: #6b7280; font-size: 0.875rem;">
@@ -37,7 +44,9 @@
         Didn't receive the code?
     <form action="/resend-otp" method="POST" style="display: inline;">
         <input type="hidden" name="email" value="<?= htmlspecialchars($_SESSION['verify_email'] ?? '') ?>">
-        <button type="submit" style="background: none; border: none; color: #3b82f6; cursor: pointer; font-size: 0.875rem; padding: 0; text-decoration: underline;">Resend OTP</button>
+        <button type="submit"
+            style="background: none; border: none; color: #3b82f6; cursor: pointer; font-size: 0.875rem; padding: 0; text-decoration: underline;">Resend
+            OTP</button>
     </form>
     </p>
 
