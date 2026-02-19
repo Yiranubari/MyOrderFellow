@@ -108,6 +108,7 @@ class AuthController
                 $pending = $_SESSION['pending_registration'];
                 if (password_verify($password, $pending['password'])) {
                     $_SESSION['verify_email'] = $email;
+                    session_destroy();
                     header('Location: /verify');
                     exit();
                 }
