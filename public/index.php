@@ -120,6 +120,11 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller->track();
         break;
 
+    case '/resend-otp':
+        $controller = new \App\Controllers\AuthController();
+        $controller->resendOtp();
+        break;
+
     case '/':
         $controller = new \App\Controllers\HomeController();
         $controller->index();
