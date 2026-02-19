@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Tracking;
 use App\Services\OrderService;
 
+
 class AdminController
 {
 
@@ -98,6 +99,9 @@ class AdminController
             if ($companyId) {
                 $adminModel = new Admin();
                 $adminModel->updateKycStatus($companyId, 'approved');
+                $mailService = new \App\Services\MailService();
+                $email = $adminModel->getEmailByCompanyId($companyId);
+                $mailService->sendKycApproval($email);
             }
         }
         header('Location: /admin/dashboard');
