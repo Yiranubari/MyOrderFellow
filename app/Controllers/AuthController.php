@@ -21,6 +21,7 @@ class AuthController
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = trim($_POST['password'] ?? '');
+            $hashPassword = password_hash($password, PASSWORD_DEFAULT);
 
             if (empty($name) || empty($email) || empty($password)) {
                 $this->error = "All fields are required.";
@@ -44,7 +45,7 @@ class AuthController
             $userModel->create([
                 'name' => $name,
                 'email' => $email,
-                'password' => $password,
+                'password' => $hashPassword,
                 'otp_code' => $otp_code,
             ]);
 
@@ -76,7 +77,7 @@ class AuthController
 
             if (isset($_SESSION['pending_registration']) && $_SESSION['pending_registration']['email'] === $email) {
                 $pending = $_SESSION['pending_registration'];
-                if ($password === $pending['password']) {
+                if (password_verify($password, $pending['password'])) {
                     $_SESSION['verify_email'] = $email;
                     header('Location: /verify');
                     exit();
