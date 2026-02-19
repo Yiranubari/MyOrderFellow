@@ -29,7 +29,7 @@ class MailService
         $this->mail->addAddress($recipientEmail);
         $this->mail->isHTML(true);
         $this->mail->Subject = 'OTP Code';
-        $this->mail->Body = "<h1>Your OTP Code</h1><p>Your OTP code is: <strong>$otp</strong></p>";
+        $this->mail->Body = "<h1>OTP></h1><p>Your OTP code is: <strong>$otp</strong></p>";
         $this->mail->send();
         return true;
     }
