@@ -62,6 +62,35 @@ class AuthController
         require_once __DIR__ . '/../../views/auth/register.php';
     }
 
+    public function verifyOTP()
+    {
+        session_start();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = trim($_POST['email']);
+            $otp_code = trim($_POST['otp_code']);
+
+            $userModel = new User();
+            $user = $userModel->findByEmail($email);
+
+            if ($user && $user['otp_code'] === $otp_code) {
+                $userModel->verifyUser($email);
+
+                $_SESSION['company_id'] = $user['id'];
+                $_SESSION['company_name'] = $user['name'];
+
+                unset($_SESSION['verify_email']);
+
+                header('Location: /dashboard');
+                exit();
+            } else {
+                $this->error = "Invalid OTP code.";
+            }
+        }
+        $email = $_SESSION['verify_email'] ?? ($_GET['email'] ?? '');
+        $error = $this->error;
+        require_once __DIR__ . '/../../views/auth/verify_otp.php';
+    }
+
 
 
     public function login()
@@ -116,34 +145,5 @@ class AuthController
         session_destroy();
         header('Location: /login');
         exit();
-    }
-
-    public function verifyOTP()
-    {
-        session_start();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim($_POST['email']);
-            $otp_code = trim($_POST['otp_code']);
-
-            $userModel = new User();
-            $user = $userModel->findByEmail($email);
-
-            if ($user && $user['otp_code'] === $otp_code) {
-                $userModel->verifyUser($email);
-
-                $_SESSION['company_id'] = $user['id'];
-                $_SESSION['company_name'] = $user['name'];
-
-                unset($_SESSION['verify_email']);
-
-                header('Location: /dashboard');
-                exit();
-            } else {
-                $this->error = "Invalid OTP code.";
-            }
-        }
-        $email = $_SESSION['verify_email'] ?? ($_GET['email'] ?? '');
-        $error = $this->error;
-        require_once __DIR__ . '/../../views/auth/verify_otp.php';
     }
 }
