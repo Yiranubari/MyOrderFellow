@@ -15,7 +15,7 @@ $mailer = new MailService();
 
 try {
     $mailer->sendOTP('yiranubari4@gmail.com', '569309');
-    echo "Success! Check your Mailtrap Inbox.";
+    echo "Success! Check your inbox.";
 } catch (Exception $e) {
     echo "Failed to send. Error: " . $e->getMessage();
 }

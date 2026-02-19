@@ -38,9 +38,8 @@ A professional, modular PHP application for order tracking, partner onboarding, 
 ### 4. Notifications
 
 - **Event-Driven Email System:**
-  **Event-Driven Email System:**
   - Email notifications are sent for OTP verification, order confirmation, and order status updates, using the `MailService` class (PHPMailer-based).
-  - Supports SMTP configuration (Mailtrap for development, Gmail/other SMTP providers for production).
+  - Supports SMTP configuration (Gmail or any SMTP provider).
 
 ### 5. Architecture
 
@@ -82,33 +81,27 @@ A professional, modular PHP application for order tracking, partner onboarding, 
     DB_DATABASE=your_db
     DB_USERNAME=your_user
     DB_PASSWORD=your_password
-
-   # SMTP (Development example: Mailtrap)
-   SMTP_HOST=sandbox.smtp.mailtrap.io
-   SMTP_PORT=2525
-   SMTP_USERNAME=your_smtp_user
-   SMTP_PASSWORD=your_smtp_pass
-   SMTP_ENCRYPTION=tls
-   SMTP_FROM_EMAIL=noreply@orderfellow.com
-   SMTP_FROM_NAME=My Order Fellow
-
-   # SMTP (Production example: Gmail)
-   # SMTP_HOST=smtp.gmail.com
-   # SMTP_PORT=587
-   # SMTP_USERNAME=your_gmail_address@gmail.com
-   # SMTP_PASSWORD=your_gmail_app_password
-   # SMTP_ENCRYPTION=tls
-   # SMTP_FROM_EMAIL=your_gmail_address@gmail.com
-   # SMTP_FROM_NAME=My Order Fellow
    ```
+
+# SMTP (Example: Gmail)
+
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your_gmail_address@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+SMTP_ENCRYPTION=tls
+SMTP_FROM_EMAIL=your_gmail_address@gmail.com
+SMTP_FROM_NAME=My Order Fellow
+
+````
 
 4. **Database Setup:**
-   - Create a PostgreSQL database.
-   - Run the migration script `migrate.sql` to set up all tables (see `migrate_database.php` for automated setup).
+- Create a PostgreSQL database.
+- Run the migration script `migrate.sql` to set up all tables (see `migrate_database.php` for automated setup).
 5. **Start the Development Server:**
-   ```bash
-   php -S localhost:8000 -t public router.php
-   ```
+```bash
+php -S localhost:8000 -t public router.php
+````
 
 ## Usage Guide
 
