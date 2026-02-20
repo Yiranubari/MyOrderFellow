@@ -170,7 +170,7 @@ class AuthController
             $mailService = new MailService();
             $mailService->sendOTP($email, $otp_code);
 
-            $_SESSION['success'] = "A new OTP has been sent to your email.";
+            $_SESSION['success'] = "A new \OTP has been sent to your email.";
             header('Location: /verify');
             exit();
         } else {
