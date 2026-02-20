@@ -57,7 +57,7 @@ class MailService
         $this->mail->Subject = 'Order Status Update';
         $noteHtml = '';
         if (!empty($note) && $note !== 'Status updated by Admin') {
-            $noteHtml = "<p>" . htmlspecialchars($note) . "</p>";
+            $noteHtml = "<p><em>" . htmlspecialchars($note) . "</em></p>";
         }
         $this->mail->Body = "<h1>Order Status Update</h1><p>Your order with ID <strong>$orderId</strong> status has been updated to: <strong>$newStatus</strong>.</p>$noteHtml";
         $this->mail->send();
