@@ -4,6 +4,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use App\Services\MailService;
+use Exception;
 
 
 $dotenv = Dotenv::createImmutable(__DIR__);
