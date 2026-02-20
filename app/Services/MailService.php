@@ -47,7 +47,7 @@ class MailService
         return true;
     }
 
-    public function sendStatusUpdate($recipientEmail, $orderId, $newStatus)
+    public function sendStatusUpdate($recipientEmail, $orderId, $newStatus, $note = null)
     {
         $this->mail->clearAddresses();
         $fromEmail = getenv('SMTP_FROM_ADDRESS') ?: $_ENV['SMTP_FROM_ADDRESS'] ?? 'yiranubari4@gmail.com';
@@ -55,7 +55,11 @@ class MailService
         $this->mail->addAddress($recipientEmail);
         $this->mail->isHTML(true);
         $this->mail->Subject = 'Order Status Update';
-        $this->mail->Body = "<h1>Order Status Update</h1><p>Your order with ID <strong>$orderId</strong> status has been updated to: <strong>$newStatus</strong>.</p>";
+        $noteHtml = '';
+        if (!empty($note) && $note !== 'Status updated by Admin') {
+            $noteHtml = "<p><strong>Note:</strong> " . htmlspecialchars($note) . "</p>";
+        }
+        $this->mail->Body = "<h1>Order Status Update</h1><p>Your order with ID <strong>$orderId</strong> status has been updated to: <strong>$newStatus</strong>.</p>$noteHtml";
         $this->mail->send();
         return true;
     }

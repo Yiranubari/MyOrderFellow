@@ -18,7 +18,7 @@ class OrderService
 
         if ($customerEmail) {
             $mailService = new MailService();
-            $mailService->sendStatusUpdate($customerEmail, $externalOrderId, $newStatus);
+            $mailService->sendStatusUpdate($customerEmail, $externalOrderId, $newStatus, $note);
         }
         return true;
     }
