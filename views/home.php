@@ -178,6 +178,26 @@
             background: var(--primary-dark);
         }
 
+        .hero-actions {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-actions a {
+            text-decoration: none;
+            background: var(--primary-dark);
+            color: #ffffff;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .hero-actions a:hover {
+            background: #1e3a8a;
+        }
+
         .features {
             display: flex;
             gap: 2rem;
@@ -299,6 +319,10 @@
             <input type="text" name="tracking_id" placeholder="Enter Tracking ID (e.g., ORD-1234)" required>
             <button type="submit">Track</button>
         </form>
+
+        <div class="hero-actions">
+            <a href="/orders/create">Place an Order</a>
+        </div>
 
         <div class="features">
             <div class="feature">
