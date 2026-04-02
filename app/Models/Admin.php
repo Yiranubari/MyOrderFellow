@@ -26,13 +26,13 @@ class Admin
         return false;
     }
 
-    public function create($name, $email, $password)
+    public function create($name, $email, $password, $companyId = null)
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        return $this->createWithHash($name, $email, $hashedPassword);
+        return $this->createWithHash($name, $email, $hashedPassword, $companyId);
     }
 
-    public function createWithHash($name, $email, $passwordHash)
+    public function createWithHash($name, $email, $passwordHash, $companyId = null)
     {
         $checkSql = "SELECT id FROM admins WHERE email = :email LIMIT 1";
         $checkStmt = $this->conn->prepare($checkSql);
@@ -43,12 +43,13 @@ class Admin
             return false;
         }
 
-        $sql = "INSERT INTO admins (name, email, password) VALUES (:name, :email, :password)";
+        $sql = "INSERT INTO admins (name, email, password, company_id) VALUES (:name, :email, :password, :company_id)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             ':name' => $name,
             ':email' => $email,
-            ':password' => $passwordHash
+            ':password' => $passwordHash,
+            ':company_id' => $companyId,
         ]);
     }
 

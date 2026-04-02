@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\AdminRegistrationOtp;
 use App\Models\Order;
 use App\Models\Tracking;
+use App\Models\User;
 use App\Services\MailService;
 use App\Services\OrderService;
 
@@ -16,11 +17,14 @@ class AdminController
     public function register()
     {
         session_start();
+        $userModel = new User();
+        $approvedCompanies = $userModel->getApprovedCompanies();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
+            $companyId = (int) ($_POST['company_id'] ?? 0);
 
             if (empty($name) || empty($email) || empty($password)) {
                 $error = "All fields are required.";
@@ -30,6 +34,12 @@ class AdminController
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error = "Please enter a valid email address.";
+                require __DIR__ . '/../../views/admin/register.php';
+                return;
+            }
+
+            if ($companyId < 1 || !$userModel->findApprovedById($companyId)) {
+                $error = "Please select a valid approved logistics company.";
                 require __DIR__ . '/../../views/admin/register.php';
                 return;
             }
@@ -64,6 +74,7 @@ class AdminController
             }
 
             $_SESSION['admin_verify_email'] = $email;
+            $_SESSION['admin_verify_company_id'] = $companyId;
             $_SESSION['admin_register_success'] = 'A verification code has been sent to your email.';
 
             header('Location: /admin/verify');
@@ -80,6 +91,7 @@ class AdminController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim($_POST['email'] ?? ($_SESSION['admin_verify_email'] ?? ''));
             $otpCode = trim($_POST['otp_code'] ?? '');
+            $companyId = (int) ($_SESSION['admin_verify_company_id'] ?? 0);
 
             if (empty($email) || empty($otpCode)) {
                 $error = "Email and OTP are required.";
@@ -89,6 +101,12 @@ class AdminController
 
             if (!preg_match('/^\d{6}$/', $otpCode)) {
                 $error = "OTP must be a valid 6-digit code.";
+                require __DIR__ . '/../../views/admin/verify_otp.php';
+                return;
+            }
+
+            if ($companyId < 1) {
+                $error = "Registration session expired. Please register again.";
                 require __DIR__ . '/../../views/admin/verify_otp.php';
                 return;
             }
@@ -110,8 +128,9 @@ class AdminController
                 return;
             }
 
-            if ($adminModel->createWithHash($pendingRegistration['name'], $email, $pendingRegistration['password_hash'])) {
+            if ($adminModel->createWithHash($pendingRegistration['name'], $email, $pendingRegistration['password_hash'], $companyId)) {
                 unset($_SESSION['admin_verify_email']);
+                unset($_SESSION['admin_verify_company_id']);
                 $_SESSION['admin_register_success'] = 'Admin account verified. Please login.';
                 header('Location: /admin/login');
                 exit();
@@ -140,6 +159,7 @@ class AdminController
             if ($admin) {
                 $_SESSION['admin_id'] = $admin['id'];
                 $_SESSION['admin_name'] = $admin['name'];
+                $_SESSION['admin_company_id'] = $admin['company_id'] ?? null;
                 header('Location: /admin/dashboard');
                 exit();
             } else {
@@ -154,6 +174,7 @@ class AdminController
         session_start();
         unset($_SESSION['admin_id']);
         unset($_SESSION['admin_name']);
+        unset($_SESSION['admin_company_id']);
         session_destroy();
         header('Location: /admin/login');
         exit();
@@ -217,7 +238,8 @@ class AdminController
             exit();
         }
         $orderModel = new Order();
-        $orders = $orderModel->getAllOrders();
+        $adminCompanyId = (int) ($_SESSION['admin_company_id'] ?? 0);
+        $orders = $adminCompanyId > 0 ? $orderModel->getByCompany($adminCompanyId) : [];
         require __DIR__ . '/../../views/admin/orders.php';
     }
     public function details()

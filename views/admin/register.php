@@ -78,7 +78,8 @@
             font-weight: 500;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 0.75rem;
             background-color: #ffffff;
@@ -88,7 +89,8 @@
             font-size: 1rem;
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: #2563eb;
             box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
@@ -188,6 +190,18 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required placeholder="Create a strong password">
+            </div>
+
+            <div class="form-group">
+                <label for="company_id">Logistics Company</label>
+                <select id="company_id" name="company_id" required>
+                    <option value="">Select company</option>
+                    <?php foreach (($approvedCompanies ?? []) as $company): ?>
+                        <option value="<?= (int) $company['id'] ?>" <?= ((int) ($_POST['company_id'] ?? 0) === (int) $company['id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($company['name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
 
             <button type="submit" class="btn-submit">Create Account</button>
