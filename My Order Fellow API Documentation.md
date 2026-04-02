@@ -12,7 +12,9 @@ This document reflects the current flow of the My Order Fellow platform.
 4. Company gets API key access on dashboard.
 5. Orders are created either:
    - via API webhook `POST /webhook`, or
-   - via manual UI form at `/orders/create`.
+
+- via public UI form at `GET /orders/create` and `POST /orders/store`.
+
 6. Customers track orders through `/track`.
 
 ---
@@ -87,21 +89,32 @@ Status: `201 Created`
 
 ---
 
-## 4. Manual Order Placement (UI)
+## 4. Public Marketplace Order Placement (UI)
 
-For authenticated company users, orders can also be created from:
+This form is available to guests (no login required):
 
 - `GET /orders/create` (form page)
-- `POST /orders/create` (form submit)
+- `POST /orders/store` (submit order)
 
-Form fields:
+### Submitted Fields
 
-- `item_description` (required)
-- `quantity` (required, integer >= 1)
-- `delivery_address` (required)
-- `status` (defaults/fixed to `pending`)
+| Field              | Type    | Required | Description                                       |
+| ------------------ | ------- | -------- | ------------------------------------------------- |
+| `company_id`       | Integer | Yes      | Approved logistics company selected from dropdown |
+| `customer_name`    | String  | Yes      | Customer full name                                |
+| `customer_email`   | String  | Yes      | Customer email                                    |
+| `customer_phone`   | String  | Yes      | Customer phone                                    |
+| `item_description` | String  | Yes      | Item details                                      |
+| `quantity`         | Integer | Yes      | Must be >= 1                                      |
+| `pickup_address`   | String  | Yes      | Pickup location                                   |
+| `delivery_address` | String  | Yes      | Delivery location                                 |
 
-This flow creates the order using existing MVC controllers/models and records tracking history.
+### Result
+
+- Order is stored in `orders` with `status = pending`
+- Order is linked to selected `company_id`
+- Tracking history receives initial "Order Created" event
+- Success message returns generated tracking ID (`MKT-...`)
 
 ---
 
@@ -142,9 +155,24 @@ Returns an HTML tracking page with current status + status history.
 
 Admin registration now uses email OTP verification.
 
-1. `POST /admin/register` → pending registration + OTP email
+1. `POST /admin/register` → pending registration + OTP email (with selected approved company)
 2. `POST /admin/verify` → OTP verification + permanent admin creation
 
 No hardcoded master key is used in the current flow.
+
+---
+
+## 7. Admin Order Access Scope
+
+Admins are company-scoped.
+
+- Each admin account stores `company_id`
+- `/admin/orders` only returns orders where:
+
+```sql
+orders.company_id = logged_in_admin.company_id
+```
+
+Admins cannot view orders from other partner companies.
 
 ---

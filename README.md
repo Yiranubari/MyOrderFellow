@@ -1,6 +1,6 @@
 # My Order Fellow
 
-My Order Fellow is a custom PHP MVC application for company onboarding, order ingestion, manual order placement, admin operations, and shipment tracking.
+My Order Fellow is a custom PHP MVC application for company onboarding, API/webhook order ingestion, public marketplace order placement, admin operations, and shipment tracking.
 
 ## Current Flow
 
@@ -22,25 +22,38 @@ My Order Fellow is a custom PHP MVC application for company onboarding, order in
 Orders can now be created in two ways:
 
 - **Webhook ingestion:** `POST /webhook` with `X-API-KEY`
-- **Manual placement page:** `/orders/create`
+- **Public marketplace form:** `GET /orders/create` and `POST /orders/store` (no user login required)
 
-Manual order form fields:
+Public marketplace form fields:
 
+- `company_id` (selected from approved logistics companies)
+- `customer_name`
+- `customer_email`
+- `customer_phone`
 - `item_description`
 - `quantity`
+- `pickup_address`
 - `delivery_address`
-- `status` (fixed/default `pending`)
+
+Orders submitted through this form are linked to the selected company and stored with default status `pending`.
 
 ### 4) Admin registration (secure OTP flow)
 
 Admin signup no longer uses a hardcoded master key.
 
-1. Open `/admin/register` and submit name, email, password.
+1. Open `/admin/register` and submit name, email, password, and company.
 2. System generates a secure 6-digit OTP and emails it.
 3. Admin enters OTP at `/admin/verify`.
 4. On successful verification, admin record is created permanently.
 
-### 5) Tracking
+Each admin is tied to a specific logistics company.
+
+### 5) Admin order visibility
+
+- Admins can only view/manage orders that belong to their own `company_id`.
+- Cross-company order visibility is restricted.
+
+### 6) Tracking
 
 - Public tracking page: `/track`
 - Admin can update order status from admin order details, and tracking history is stored.
@@ -91,15 +104,15 @@ php -S localhost:8000 -t public router.php
 Current schema includes:
 
 - `companies`
-- `admins`
-- `orders` (includes `item_description`, `quantity`, `status`)
+- `admins` (includes `company_id`)
+- `orders` (includes `customer_name`, `customer_phone`, `pickup_address`, `item_description`, `quantity`, `status`)
 - `tracking_history`
 - `rate_limits`
 - `admin_registration_otps` (temporary admin OTP storage)
 
 ## Useful Endpoints
 
-- Company: `/register`, `/verify`, `/login`, `/dashboard`, `/orders/create`
-- Admin: `/admin/register`, `/admin/verify`, `/admin/login`, `/admin/dashboard`
+- Public: `/`, `/orders/create`, `/orders/store`, `/track`, `/track/result`
+- Company: `/register`, `/verify`, `/login`, `/dashboard`
+- Admin: `/admin/register`, `/admin/verify`, `/admin/login`, `/admin/dashboard`, `/admin/orders`
 - API: `/webhook`
-- Tracking: `/track`, `/track/result`
