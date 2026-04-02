@@ -70,16 +70,35 @@ class Admin
 
     public function updateKycStatus($companyId, $status)
     {
-        $sql = "UPDATE companies
-                SET kyc_status = :status,
-                    is_approved = CASE
-                        WHEN :status = 'approved' THEN TRUE
-                        WHEN :status = 'rejected' THEN FALSE
-                        ELSE is_approved
-                    END
-                WHERE id = :company_id";
+        if ($this->hasIsApprovedColumn()) {
+            $sql = "UPDATE companies
+                    SET kyc_status = :status,
+                        is_approved = CASE
+                            WHEN :status = 'approved' THEN TRUE
+                            WHEN :status = 'rejected' THEN FALSE
+                            ELSE is_approved
+                        END
+                    WHERE id = :company_id";
+        } else {
+            $sql = "UPDATE companies SET kyc_status = :status WHERE id = :company_id";
+        }
+
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([':status' => $status, ':company_id' => $companyId]);
+    }
+
+    private function hasIsApprovedColumn()
+    {
+        $sql = "SELECT 1
+                FROM information_schema.columns
+                WHERE table_name = 'companies'
+                  AND column_name = 'is_approved'
+                LIMIT 1";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        return (bool) $stmt->fetchColumn();
     }
 
     public function findEmailByCompanyId($companyId)

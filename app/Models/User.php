@@ -121,7 +121,8 @@ class User
 
     public function getApprovedCompanies()
     {
-        $sql = "SELECT id, name FROM companies WHERE is_approved = TRUE ORDER BY name ASC";
+        $approvalCondition = $this->hasIsApprovedColumn() ? "is_approved = TRUE" : "kyc_status = 'approved'";
+        $sql = "SELECT id, name FROM companies WHERE {$approvalCondition} ORDER BY name ASC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -129,9 +130,24 @@ class User
 
     public function findApprovedById($id)
     {
-        $sql = "SELECT id, name FROM companies WHERE id = :id AND is_approved = TRUE LIMIT 1";
+        $approvalCondition = $this->hasIsApprovedColumn() ? "is_approved = TRUE" : "kyc_status = 'approved'";
+        $sql = "SELECT id, name FROM companies WHERE id = :id AND {$approvalCondition} LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    private function hasIsApprovedColumn()
+    {
+        $sql = "SELECT 1
+                FROM information_schema.columns
+                WHERE table_name = 'companies'
+                  AND column_name = 'is_approved'
+                LIMIT 1";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        return (bool) $stmt->fetchColumn();
     }
 }
