@@ -56,6 +56,16 @@
             font-size: 0.875rem;
         }
 
+        .success-box {
+            background-color: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
         .form-group {
             margin-bottom: 1.25rem;
         }
@@ -86,26 +96,6 @@
 
         .form-group input::placeholder {
             color: #9ca3af;
-        }
-
-        .form-group.critical input {
-            border-color: #ec4899;
-        }
-
-        .form-group.critical input:focus {
-            border-color: #ec4899;
-            box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.2);
-        }
-
-        .form-group.critical label {
-            color: #db2777;
-        }
-
-        .critical-note {
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin-top: 0.25rem;
-            font-style: italic;
         }
 
         .btn-submit {
@@ -175,27 +165,29 @@
             </div>
         <?php endif; ?>
 
+        <?php if (isset($_SESSION['admin_register_success'])): ?>
+            <div class="success-box">
+                <?= htmlspecialchars($_SESSION['admin_register_success']) ?>
+            </div>
+            <?php unset($_SESSION['admin_register_success']); ?>
+        <?php endif; ?>
+
         <form method="POST" action="/admin/register">
             <div class="form-group">
                 <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                <input type="text" id="name" name="name" required placeholder="Enter your full name"
+                    value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
             </div>
 
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required placeholder="admin@example.com">
+                <input type="email" id="email" name="email" required placeholder="admin@example.com"
+                    value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required placeholder="Create a strong password">
-            </div>
-
-            <div class="form-group critical">
-                <label for="admin_secret">Master Access Code</label>
-                <input type="password" id="admin_secret" name="admin_secret" required
-                    placeholder="Enter the system secret key">
-                <p class="critical-note">This code is required to authorize admin registration.</p>
             </div>
 
             <button type="submit" class="btn-submit">Create Account</button>

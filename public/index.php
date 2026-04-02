@@ -6,6 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Dotenv\Dotenv;
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
+use App\Controllers\OrderController;
 
 if (file_exists(__DIR__ . '/../.env')) {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
@@ -70,6 +71,12 @@ switch ($_SERVER['REQUEST_URI']) {
         $controller->register();
         break;
 
+    case '/admin/verify':
+        require __DIR__ . '/../app/Controllers/AdminController.php';
+        $controller = new \App\Controllers\AdminController();
+        $controller->verifyRegistrationOtp();
+        break;
+
     case '/admin/login':
         require __DIR__ . '/../app/Controllers/AdminController.php';
         $controller = new \App\Controllers\AdminController();
@@ -123,6 +130,28 @@ switch ($_SERVER['REQUEST_URI']) {
     case '/resend-otp':
         $controller = new AuthController();
         $controller->resendOtp();
+        break;
+
+    case '/orders/create':
+        require __DIR__ . '/../app/Controllers/OrderController.php';
+        $controller = new OrderController();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller->create();
+        } else {
+            http_response_code(405);
+            echo "Method Not Allowed";
+        }
+        break;
+
+    case '/orders/store':
+        require __DIR__ . '/../app/Controllers/OrderController.php';
+        $controller = new OrderController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->store();
+        } else {
+            http_response_code(405);
+            echo "Method Not Allowed";
+        }
         break;
 
     case '/':

@@ -13,8 +13,10 @@
         <a href="/" class="brand">My Order Fellow</a>
         <div class="nav-links">
             <?php if (isset($_SESSION['company_id'])): ?>
+                <a href="/orders/create">Place Order</a>
                 <a href="/logout">Logout</a>
             <?php else: ?>
+                <a href="/orders/create">Place Order</a>
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
             <?php endif; ?>

@@ -18,7 +18,25 @@ class Order
     public function create($data)
     {
         $jsonItems = json_encode($data['items']);
-        $sql = "INSERT INTO orders (company_id, external_order_id, customer_email, delivery_address, items) VALUES (:company_id, :external_order_id, :customer_email, :delivery_address, :items)";
+        $sql = "INSERT INTO orders (
+                    company_id,
+                    external_order_id,
+                    customer_email,
+                    delivery_address,
+                    items,
+                    item_description,
+                    quantity,
+                    status
+                ) VALUES (
+                    :company_id,
+                    :external_order_id,
+                    :customer_email,
+                    :delivery_address,
+                    :items,
+                    :item_description,
+                    :quantity,
+                    :status
+                )";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             ':company_id' => $data['company_id'],
@@ -26,6 +44,9 @@ class Order
             ':customer_email' => $data['customer_email'],
             ':delivery_address' => $data['delivery_address'],
             ':items' => $jsonItems,
+            ':item_description' => $data['item_description'] ?? null,
+            ':quantity' => $data['quantity'] ?? null,
+            ':status' => $data['status'] ?? 'pending',
         ]);
         return $this->conn->lastInsertId();
     }
@@ -70,5 +91,62 @@ class Order
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':external_order_id' => $externalId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function createMarketplaceOrder($data)
+    {
+        $items = [
+            [
+                'name' => $data['item_description'],
+                'qty' => 1,
+            ],
+        ];
+
+        $sql = "INSERT INTO orders (
+                    company_id,
+                    external_order_id,
+                    customer_name,
+                    customer_email,
+                    customer_phone,
+                    item_description,
+                    pickup_address,
+                    delivery_address,
+                    items,
+                    quantity,
+                    status
+                ) VALUES (
+                    :company_id,
+                    :external_order_id,
+                    :customer_name,
+                    :customer_email,
+                    :customer_phone,
+                    :item_description,
+                    :pickup_address,
+                    :delivery_address,
+                    :items,
+                    :quantity,
+                    :status
+                )";
+
+        $stmt = $this->conn->prepare($sql);
+        $ok = $stmt->execute([
+            ':company_id' => $data['company_id'],
+            ':external_order_id' => $data['external_order_id'],
+            ':customer_name' => $data['customer_name'],
+            ':customer_email' => $data['customer_email'],
+            ':customer_phone' => $data['customer_phone'],
+            ':item_description' => $data['item_description'],
+            ':pickup_address' => $data['pickup_address'],
+            ':delivery_address' => $data['delivery_address'],
+            ':items' => json_encode($items),
+            ':quantity' => 1,
+            ':status' => $data['status'] ?? 'pending',
+        ]);
+
+        if (!$ok) {
+            return false;
+        }
+
+        return $this->conn->lastInsertId();
     }
 }

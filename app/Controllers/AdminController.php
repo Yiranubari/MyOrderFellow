@@ -3,8 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\Admin;
+use App\Models\AdminRegistrationOtp;
 use App\Models\Order;
 use App\Models\Tracking;
+use App\Services\MailService;
 use App\Services\OrderService;
 
 
@@ -14,30 +16,112 @@ class AdminController
     public function register()
     {
         session_start();
-        $systemSecret = "MOF-MASTER-KEY";
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $secret = $_POST['admin_secret'] ?? '';
 
-            if ($secret !== $systemSecret) {
-                $error = "Access Denied: Incorrect System Secret.";
+            if (empty($name) || empty($email) || empty($password)) {
+                $error = "All fields are required.";
                 require __DIR__ . '/../../views/admin/register.php';
                 return;
             }
-            $adminModel = new Admin();
-            if ($adminModel->create($name, $email, $hashedPassword)) {
-                header('Location: /admin/login');
-                exit();
-            } else {
-                $error = "Error: Email already exists or registration failed.";
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error = "Please enter a valid email address.";
+                require __DIR__ . '/../../views/admin/register.php';
+                return;
             }
+
+            $adminModel = new Admin();
+
+            if ($adminModel->findByEmail($email)) {
+                $error = "Email already exists.";
+                require __DIR__ . '/../../views/admin/register.php';
+                return;
+            }
+
+            $otpCode = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+            $otpModel = new AdminRegistrationOtp();
+            $otpSaved = $otpModel->createOrReplace($name, $email, $passwordHash, $otpCode, 10);
+
+            if (!$otpSaved) {
+                $error = "Could not start verification. Please try again.";
+                require __DIR__ . '/../../views/admin/register.php';
+                return;
+            }
+
+            try {
+                $mailService = new MailService();
+                $mailService->sendOTP($email, $otpCode);
+            } catch (\Throwable $e) {
+                $error = "Unable to send verification code. Please try again.";
+                require __DIR__ . '/../../views/admin/register.php';
+                return;
+            }
+
+            $_SESSION['admin_verify_email'] = $email;
+            $_SESSION['admin_register_success'] = 'A verification code has been sent to your email.';
+
+            header('Location: /admin/verify');
+            exit();
         }
 
         require __DIR__ . '/../../views/admin/register.php';
+    }
+
+    public function verifyRegistrationOtp()
+    {
+        session_start();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = trim($_POST['email'] ?? ($_SESSION['admin_verify_email'] ?? ''));
+            $otpCode = trim($_POST['otp_code'] ?? '');
+
+            if (empty($email) || empty($otpCode)) {
+                $error = "Email and OTP are required.";
+                require __DIR__ . '/../../views/admin/verify_otp.php';
+                return;
+            }
+
+            if (!preg_match('/^\d{6}$/', $otpCode)) {
+                $error = "OTP must be a valid 6-digit code.";
+                require __DIR__ . '/../../views/admin/verify_otp.php';
+                return;
+            }
+
+            $otpModel = new AdminRegistrationOtp();
+            $pendingRegistration = $otpModel->consumeOtp($email, $otpCode);
+
+            if (!$pendingRegistration) {
+                $error = "Invalid or expired OTP code.";
+                require __DIR__ . '/../../views/admin/verify_otp.php';
+                return;
+            }
+
+            $adminModel = new Admin();
+
+            if ($adminModel->findByEmail($email)) {
+                $error = "An admin account already exists for this email.";
+                require __DIR__ . '/../../views/admin/verify_otp.php';
+                return;
+            }
+
+            if ($adminModel->createWithHash($pendingRegistration['name'], $email, $pendingRegistration['password_hash'])) {
+                unset($_SESSION['admin_verify_email']);
+                $_SESSION['admin_register_success'] = 'Admin account verified. Please login.';
+                header('Location: /admin/login');
+                exit();
+            } else {
+                $error = "Registration failed. Please try again.";
+            }
+        }
+
+        $email = $_SESSION['admin_verify_email'] ?? ($_GET['email'] ?? '');
+        require __DIR__ . '/../../views/admin/verify_otp.php';
     }
     public function login()
     {

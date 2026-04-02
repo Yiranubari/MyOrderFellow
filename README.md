@@ -1,136 +1,105 @@
 # My Order Fellow
 
-A professional, modular PHP application for order tracking, partner onboarding, and compliance. The system is engineered with a custom MVC framework, robust authentication, secure API gateway, and event-driven notifications.
+My Order Fellow is a custom PHP MVC application for company onboarding, order ingestion, manual order placement, admin operations, and shipment tracking.
 
-## Key Features
+## Current Flow
 
-### 1. Authentication & Compliance
+### 1) Company registration and verification
 
-- **Partner Onboarding Flow:**
-  - New partners (companies) register and complete a KYC (Know Your Customer) workflow, including business registration number and address submission.
-  - KYC submissions are reviewed by an admin for approval or rejection.
-- **Admin Approval Logic:**
-  - Admins can view pending KYC applications and approve or reject them via the dashboard.
-  - **Admin Registration:** Requires a system-level secret key (`MOF-MASTER-KEY`) for secure onboarding of administrative staff.
-- **OTP/Email Verification:**
-  - User registration triggers an OTP sent via email. Registration is only completed after OTP verification, ensuring email authenticity.
-  - Includes a resend OTP action from the verification screen (`/resend-otp`).
+1. Company registers at `/register`.
+2. OTP is sent by email.
+3. Company verifies OTP at `/verify` (with resend support via `/resend-otp`).
+4. Company logs in at `/login` and lands on `/dashboard`.
 
-### 2. API Gateway & Webhooks
+### 2) KYC and API key activation
 
-- **Webhook Ingestion Point:**
-  - Orders are ingested via a `/webhook` endpoint, protected by API key authentication.
-- **Security Measures:**
-  - **Custom Rate Limiter:** All sensitive endpoints are protected by a PostgreSQL-backed rate limiter (serverless-friendly).
-    - **Webhooks:** Limited to 10 requests per minute per IP.
-    - **Tracking:** Limited to 10 requests per minute per IP.
-  - **API Key Verification:** Each webhook request is authenticated using a unique API key issued to approved partners via the `X-API-KEY` header.
-- **CLI Simulator:**
-  - The `mock_store.php` script simulates external order creation by sending test payloads to the webhook endpoint for integration testing.
+1. Company submits KYC from dashboard.
+2. Admin reviews submission at `/admin/dashboard`.
+3. On approval, company can generate/use API key from dashboard.
 
-### 3. Core Tracking Engine
+### 3) Order creation
 
-- **Order Status Lifecycle:**
-  - Orders progress through statuses (e.g., Pending, Delivered), with each change recorded in a tracking history table.
-- **Public Tracking Page:**
-  - Anyone can retrieve order status/history using an external tracking ID, without authentication, via the `/track` endpoint.
+Orders can now be created in two ways:
 
-### 4. Notifications
+- **Webhook ingestion:** `POST /webhook` with `X-API-KEY`
+- **Manual placement page:** `/orders/create`
 
-- **Event-Driven Email System:**
-  - Email notifications are sent for OTP verification, order confirmation, and order status updates, using the `MailService` class (PHPMailer-based).
-  - Supports SMTP configuration (Gmail or any SMTP provider).
+Manual order form fields:
 
-### 5. Architecture
+- `item_description`
+- `quantity`
+- `delivery_address`
+- `status` (fixed/default `pending`)
 
-- **Custom PHP MVC Framework:**
-  - **Router:** All HTTP requests are routed through `public/index.php`, which dispatches to controllers based on the request path.
-  - **Controllers, Models, Views:** Clear separation of concerns for maintainability and testability.
-  - **Service Layer:** Business logic (e.g., order status updates, email notifications) is encapsulated in service classes.
-  - **Database Abstraction:** A dedicated `Database` class manages PDO connections and queries.
-  - **Rate Limiter:** Implements a PostgreSQL-backed singleton pattern to throttle requests per IP, storing state in the database for serverless compatibility.
+### 4) Admin registration (secure OTP flow)
 
-## Technical Architecture
+Admin signup no longer uses a hardcoded master key.
 
-- **Controllers:** Handle HTTP requests, session management, and invoke business logic (e.g., `WebhookController`, `AuthController`, `AdminController`, `DashboardController`, `TrackingController`, `HomeController`).
-- **Models:** Encapsulate database operations for users, admins, orders, and tracking history (e.g., `User`, `Admin`, `Order`, `Tracking`).
-- **Views:** Render HTML for authentication, admin, dashboard, and tracking interfaces, organized in a modular structure with shared layouts.
-- **Services:** Contain reusable business logic (e.g., `MailService`, `OrderService`).
-- **Core:** Framework utilities (e.g., `Database`, `RateLimiter` [PostgreSQL-backed]).
-- **Public:** Entry point (`index.php`) and static assets (CSS, etc.).
-- **Router:** Custom router (`public/index.php`) for clean URL handling.
-- **Vercel Integration:** Optimized for serverless deployment with `vercel.json` and `api/index.php` entry point.
+1. Open `/admin/register` and submit name, email, password.
+2. System generates a secure 6-digit OTP and emails it.
+3. Admin enters OTP at `/admin/verify`.
+4. On successful verification, admin record is created permanently.
 
-## Installation & Setup
+### 5) Tracking
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/Yiranubari/MyOrderFellow
-   cd MyOrderFellow
-   ```
-2. **Install Dependencies:**
-   ```bash
-   composer install
-   ```
-3. **Environment Configuration:**
-   - Create a `.env` file in the root directory with the following variables:
+- Public tracking page: `/track`
+- Admin can update order status from admin order details, and tracking history is stored.
 
-   ```env
-    DB_HOST=localhost
-    DB_PORT=5432
-    DB_DATABASE=your_db
-    DB_USERNAME=your_user
-    DB_PASSWORD=your_password
+## Key Components
 
+- **Controllers:** `AuthController`, `DashboardController`, `AdminController`, `OrderController`, `WebhookController`, `TrackingController`, `HomeController`
+- **Models:** `User`, `Admin`, `AdminRegistrationOtp`, `Order`, `Tracking`
+- **Services:** `MailService`, `OrderService`
+- **Core:** `Database` (PDO + Postgres URL), `RateLimiter`
+- **Routing:** centralized in `public/index.php`
 
-    SMTP_HOST=smtp.gmail.com
-    SMTP_PORT=587
-    SMTP_USERNAME=your_gmail_address@gmail.com
-    SMTP_PASSWORD=your_gmail_app_password
-    SMTP_ENCRYPTION=tls
-    SMTP_FROM_EMAIL=your_gmail_address@gmail.com
-    SMTP_FROM_NAME=My Order Fellow
+## Setup
 
-   ```
+1. Install dependencies:
 
-````
+```bash
+composer install
+```
 
-4. **Database Setup:**
-- Create a PostgreSQL database.
-- Run the migration script `migrate.sql` to set up all tables (see `migrate_database.php` for automated setup).
-5. **Start the Development Server:**
+2. Create `.env` in project root:
+
+```env
+DB_URL=postgresql://USER:PASSWORD@HOST:5432/DB_NAME
+
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your_gmail_address@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+SMTP_ENCRYPTION=tls
+SMTP_FROM_ADDRESS=your_gmail_address@gmail.com
+```
+
+3. Run database migration:
+
+```bash
+php migrate_database.php
+```
+
+4. Start local server:
+
 ```bash
 php -S localhost:8000 -t public router.php
-````
+```
 
-## Usage Guide
+## Database Notes
 
-### Partner Onboarding & KYC
+Current schema includes:
 
-- Register as a company at `/register` and complete the KYC form in the dashboard.
-- Await admin approval. Admins manage applications at `/admin/dashboard`.
+- `companies`
+- `admins`
+- `orders` (includes `item_description`, `quantity`, `status`)
+- `tracking_history`
+- `rate_limits`
+- `admin_registration_otps` (temporary admin OTP storage)
 
-### OTP Verification
+## Useful Endpoints
 
-- After registration/login (if not verified), you’ll be redirected to `/verify`.
-- If you didn’t receive the code, use the resend action on the verification page (POST `/resend-otp`).
-
-### API/Webhook Integration
-
-- After KYC approval, retrieve your API key from the dashboard.
-- Send order payloads to `/webhook` using your API key in the `X-API-KEY` header.
-- Use `mock_store.php` to simulate webhook requests:
-  ```bash
-  php mock_store.php
-  ```
-
-### Public Tracking
-
-- Customers can track orders at `/track` using their external tracking ID (no login required).
-
-### Admin Panel
-
-- **Registration:** Access `/admin/register` and use the master key `MOF-MASTER-KEY` to create an account.
-- **Management:** Admins can approve/reject KYC, view orders, and update order statuses at `/admin/dashboard`.
-
----
+- Company: `/register`, `/verify`, `/login`, `/dashboard`, `/orders/create`
+- Admin: `/admin/register`, `/admin/verify`, `/admin/login`, `/admin/dashboard`
+- API: `/webhook`
+- Tracking: `/track`, `/track/result`

@@ -53,7 +53,7 @@ try {
     echo "All tables created successfully!\n\n";
 
     echo "Verifying tables...\n";
-    $tables = ['companies', 'admins', 'orders', 'tracking_history', 'rate_limits'];
+    $tables = ['companies', 'admins', 'orders', 'tracking_history', 'rate_limits', 'admin_registration_otps'];
 
     foreach ($tables as $table) {
         $stmt = $pdo->query("SELECT COUNT(*) FROM information_schema.tables WHERE table_name = '$table'");

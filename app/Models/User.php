@@ -37,6 +37,14 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function findById($id)
+    {
+        $sql = "SELECT * FROM companies WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function verifyUser($email)
     {
 
@@ -109,5 +117,21 @@ class User
         $sql = "UPDATE companies SET otp_code = :otp_code WHERE email = :email";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([':otp_code' => $otp, ':email' => $email]);
+    }
+
+    public function getApprovedCompanies()
+    {
+        $sql = "SELECT id, name FROM companies WHERE is_approved = TRUE ORDER BY name ASC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findApprovedById($id)
+    {
+        $sql = "SELECT id, name FROM companies WHERE id = :id AND is_approved = TRUE LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
