@@ -40,6 +40,8 @@ class OrderController
         $customerEmail = trim($_POST['customer_email'] ?? '');
         $customerPhone = trim($_POST['customer_phone'] ?? '');
         $itemDescription = trim($_POST['item_description'] ?? '');
+        $quantityRaw = $_POST['quantity'] ?? null;
+        $quantity = filter_var($quantityRaw, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
         $pickupAddress = trim($_POST['pickup_address'] ?? '');
         $deliveryAddress = trim($_POST['delivery_address'] ?? '');
 
@@ -49,6 +51,7 @@ class OrderController
             $customerEmail === '' ||
             $customerPhone === '' ||
             $itemDescription === '' ||
+            $quantity === false ||
             $pickupAddress === '' ||
             $deliveryAddress === ''
         ) {
@@ -81,6 +84,7 @@ class OrderController
             'customer_email' => $customerEmail,
             'customer_phone' => $customerPhone,
             'item_description' => $itemDescription,
+            'quantity' => (int) $quantity,
             'pickup_address' => $pickupAddress,
             'delivery_address' => $deliveryAddress,
             'status' => 'pending',

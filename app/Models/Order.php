@@ -95,10 +95,15 @@ class Order
 
     public function createMarketplaceOrder($data)
     {
+        $quantity = isset($data['quantity']) ? (int) $data['quantity'] : 1;
+        if ($quantity < 1) {
+            $quantity = 1;
+        }
+
         $items = [
             [
                 'name' => $data['item_description'],
-                'qty' => 1,
+                'qty' => $quantity,
             ],
         ];
 
@@ -139,7 +144,7 @@ class Order
             ':pickup_address' => $data['pickup_address'],
             ':delivery_address' => $data['delivery_address'],
             ':items' => json_encode($items),
-            ':quantity' => 1,
+            ':quantity' => $quantity,
             ':status' => $data['status'] ?? 'pending',
         ]);
 
